@@ -1,0 +1,43 @@
+body {
+    background-color: #020617;
+    color: #f1f5f9;
+    overflow: hidden;
+    margin: 0;
+}
+
+.glass {
+    background: rgba(15, 23, 42, 0.8);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.view {
+    display: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    height: 100vh;
+    width: 100%;
+    position: absolute;
+    inset: 0;
+}
+
+.view-active {
+    display: flex !important;
+    opacity: 1;
+    z-index: 10;
+}
+
+.menu-hidden {
+    opacity: 0;
+    transform: scale(0.95) translateY(-10px);
+    pointer-events: none;
+}
+
+.text-accent { color: #00ffa3; }
+.text-cyberBlue { color: #00d1ff; }
+
+#snakeCanvas {
+    background: #000;
+    border: 1px solid rgba(0, 255, 163, 0.3);
+}
