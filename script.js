@@ -1,79 +1,68 @@
-// Función Global de Navegación
-function changeView(viewId) {
-    document.querySelectorAll('.view').forEach(v => v.classList.remove('view-active'));
-    document.getElementById('view-' + viewId).classList.add('view-active');
+// Forzamos que las funciones sean globales
+window.changeView = function(viewId) {
+    console.log("Intentando entrar a:", viewId);
+    
+    // Ocultar todas las vistas
+    document.querySelectorAll('.view').forEach(v => {
+        v.classList.remove('view-active');
+    });
+    
+    // Mostrar la elegida
+    const target = document.getElementById('view-' + viewId);
+    if (target) {
+        target.classList.add('view-active');
+    }
+
+    // Cerrar el menú siempre
     document.getElementById('dropdown-menu').classList.add('menu-hidden');
 
-    // Manejo de procesos según la vista
+    // Lógica específica
     if (viewId === 'game') {
-        initSnakeGame();
+        if (window.initSnakeGame) window.initSnakeGame();
     } else {
-        if (typeof stopSnakeGame === "function") stopSnakeGame();
+        if (window.stopSnakeGame) window.stopSnakeGame();
     }
 
     if (viewId === 'terminal') {
-        setTimeout(() => document.getElementById('term-input').focus(), 100);
+        setTimeout(() => document.getElementById('term-input').focus(), 50);
     }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+    // Menú de 3 puntos
     const dotsBtn = document.getElementById('dots-btn');
     const menu = document.getElementById('dropdown-menu');
+
+    dotsBtn.onclick = (e) => {
+        e.stopPropagation();
+        menu.classList.toggle('menu-hidden');
+    };
+
+    document.onclick = () => menu.classList.add('menu-hidden');
+
+    // Terminal
     const termInput = document.getElementById('term-input');
     const termLog = document.getElementById('term-log');
 
-    // Toggle Menú
-    dotsBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        menu.classList.toggle('menu-hidden');
-    });
-
-    document.addEventListener('click', () => menu.classList.add('menu-hidden'));
-
-    // Navegación de botones
-    document.getElementById('btn-terminal').addEventListener('click', () => changeView('terminal'));
-    document.getElementById('btn-game').addEventListener('click', () => changeView('game'));
-
-    // Lógica de Terminal
-    const commands = {
-        'help': 'Comandos disponibles: bio, github, clear, exit, date',
-        'bio': 'Andrey Mihai: Desarrollador Java enfocado en optimización.',
-        'github': 'Abriendo github.com/andrey828...',
-        'date': () => new Date().toLocaleString(),
-        'clear': 'CLEAR'
-    };
-
-    termInput.addEventListener('keydown', (e) => {
+    termInput.onkeydown = (e) => {
         if (e.key === 'Enter') {
-            const input = termInput.value.trim().toLowerCase();
-            if (input === 'exit') { changeView('home'); termInput.value = ''; return; }
+            const val = termInput.value.toLowerCase().trim();
+            if(val === 'exit') { window.changeView('home'); termInput.value = ''; return; }
 
-            // Eco
             const p = document.createElement('p');
             p.innerHTML = `<span class="text-[#00ffa3]">root@andrey:~$</span> ${termInput.value}`;
             termLog.appendChild(p);
 
             const res = document.createElement('p');
-            res.className = 'text-slate-400 mb-2 pl-4';
+            res.className = "text-slate-500 mb-2 pl-4";
+            
+            if (val === 'help') res.innerText = "Comandos: bio, github, exit, clear";
+            else if (val === 'bio') res.innerText = "Andrey Mihai: Software Developer.";
+            else if (val === 'clear') { termLog.innerHTML = ''; termInput.value = ''; return; }
+            else if (val !== '') res.innerText = "Comando no reconocido.";
 
-            if (input === 'clear') {
-                termLog.innerHTML = '';
-            } else if (commands[input]) {
-                res.innerHTML = typeof commands[input] === 'function' ? commands[input]() : commands[input];
-                termLog.appendChild(res);
-                if (input === 'github') window.open('https://github.com/andrey828', '_blank');
-            } else if (input !== '') {
-                res.innerHTML = `Comando no reconocido: ${input}`;
-                termLog.appendChild(res);
-            }
-
+            termLog.appendChild(res);
             termInput.value = '';
-            document.getElementById('term-container').scrollTop = document.getElementById('term-container').scrollHeight;
         }
-    });
-
-    // Esc para salir de cualquier vista
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') changeView('home');
-    });
+    };
 });
