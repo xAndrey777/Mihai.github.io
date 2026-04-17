@@ -1,41 +1,508 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mihai | Developer Portfolio</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Andrey Mihai — Portfolio</title>
+
+  <!-- =============================================
+       FUENTES DE GOOGLE FONTS
+       Orbitron: titular tecnológico para el nombre
+       Share Tech Mono: estilo terminal / código
+       Nunito: texto de cuerpo, legible y moderno
+  ============================================= -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS vía CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- =============================================
+       CONFIGURACIÓN DE TAILWIND
+       Extiende los valores por defecto con
+       los colores y fuentes del proyecto.
+  ============================================= -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['Orbitron', 'sans-serif'],
+            mono:    ['Share Tech Mono', 'monospace'],
+            body:    ['Nunito', 'sans-serif'],
+          },
+          colors: {
+            neon:  '#00ff88',
+            dark:  '#050a0e',
+            panel: '#0d1b22',
+          },
+        },
+      },
+    };
+  </script>
+
+  <!-- =============================================
+       ESTILOS PERSONALIZADOS
+       Todo lo que Tailwind no cubre directamente:
+       efectos de brillo (glow), animaciones,
+       fondo de cuadrícula, scrollbar, etc.
+  ============================================= -->
+  <style>
+    /* ── Variables globales de color ─────────────── */
+    :root {
+      --neon:   #00ff88;
+      --neon2:  #00ccff;
+      --dark:   #050a0e;
+      --panel:  #0d1b22;
+      --border: rgba(0,255,136,0.18);
+    }
+
+    /* ── Reset y base ────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background-color: var(--dark);
+      color: #c8d8e0;
+      font-family: 'Nunito', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* ── Scrollbar personalizado (navegadores Webkit) */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--dark); }
+    ::-webkit-scrollbar-thumb { background: var(--neon); border-radius: 3px; }
+
+    /* ── Selección de texto ──────────────────────── */
+    ::selection { background: var(--neon); color: #000; }
+
+    /* =============================================
+       FONDO ANIMADO DE CUADRÍCULA
+       Crea el efecto de "grid ciberpunk"
+    ============================================= */
+    .grid-bg {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      background-image:
+        linear-gradient(rgba(0,255,136,.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,255,136,.04) 1px, transparent 1px);
+      background-size: 50px 50px;
+      pointer-events: none;
+    }
+    /* Viñeta oscura sobre el grid para dar profundidad */
+    .grid-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at center, transparent 40%, var(--dark) 100%);
+    }
+
+    /* =============================================
+       EFECTOS DE BRILLO (GLOW)
+    ============================================= */
+    .glow-text {
+      text-shadow:
+        0 0 10px var(--neon),
+        0 0 30px rgba(0,255,136,.4),
+        0 0 60px rgba(0,255,136,.2);
+    }
+    .glow-border {
+      box-shadow:
+        0 0 0 1px var(--border),
+        0 0 20px rgba(0,255,136,.08),
+        inset 0 0 20px rgba(0,255,136,.04);
+    }
+    .glow-border:hover {
+      box-shadow:
+        0 0 0 1px rgba(0,255,136,.5),
+        0 0 25px rgba(0,255,136,.2),
+        inset 0 0 20px rgba(0,255,136,.08);
+      transition: box-shadow .3s ease;
+    }
+    .btn-neon {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid var(--neon);
+      color: var(--neon);
+      background: transparent;
+      transition: color .3s, background .3s, box-shadow .3s;
+    }
+    .btn-neon:hover {
+      background: var(--neon);
+      color: #000;
+      box-shadow: 0 0 20px rgba(0,255,136,.5), 0 0 40px rgba(0,255,136,.2);
+    }
+
+    /* =============================================
+       ANIMACIONES DE ENTRADA
+       Clases .fade-up que se activan con JS
+       cuando el elemento entra en el viewport.
+    ============================================= */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity .7s ease, transform .7s ease;
+    }
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* =============================================
+       ANIMACIÓN DEL CURSOR PARPADEANTE
+       Para el efecto de "escritura" en el hero
+    ============================================= */
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0; }
+    }
+    .cursor {
+      display: inline-block;
+      width: 3px;
+      height: 1.1em;
+      background: var(--neon);
+      vertical-align: middle;
+      margin-left: 4px;
+      animation: blink 1s step-end infinite;
+    }
+
+    /* =============================================
+       ANIMACIÓN HERO — ENTRADA INICIAL
+    ============================================= */
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .anim-down { animation: slideDown .8s ease forwards; }
+    .anim-up   { animation: slideUp  .8s ease .2s forwards; opacity: 0; }
+    .anim-up2  { animation: slideUp  .8s ease .4s forwards; opacity: 0; }
+    .anim-up3  { animation: slideUp  .8s ease .6s forwards; opacity: 0; }
+
+    /* =============================================
+       TARJETAS DE PROYECTO
+       Glassmorphism + borde neon al hover
+    ============================================= */
+    .project-card {
+      background: rgba(13,27,34,.8);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--border);
+      transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease;
+    }
+    .project-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(0,255,136,.45);
+      box-shadow: 0 12px 40px rgba(0,255,136,.12);
+    }
+
+    /* =============================================
+       ETIQUETAS DE HABILIDADES (TAGS)
+    ============================================= */
+    .skill-tag {
+      border: 1px solid rgba(0,255,136,.25);
+      background: rgba(0,255,136,.05);
+      color: #a0c8b8;
+      font-family: 'Share Tech Mono', monospace;
+      transition: background .25s, border-color .25s, color .25s, transform .2s;
+    }
+    .skill-tag:hover {
+      background: rgba(0,255,136,.15);
+      border-color: var(--neon);
+      color: var(--neon);
+      transform: scale(1.05);
+    }
+
+    /* =============================================
+       SEPARADOR DE SECCIÓN
+       Línea horizontal con degradado neon
+    ============================================= */
+    .section-divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--neon), transparent);
+      opacity: .3;
+      margin: 0 auto;
+      max-width: 600px;
+    }
+
+    /* =============================================
+       BARRA DE NAV — FONDO AL HACER SCROLL
+    ============================================= */
+    #navbar {
+      transition: background .4s, box-shadow .4s;
+    }
+    #navbar.scrolled {
+      background: rgba(5,10,14,.9);
+      backdrop-filter: blur(16px);
+      box-shadow: 0 1px 0 rgba(0,255,136,.12);
+    }
+
+    /* =============================================
+       ICONO DE GITHUB en el footer
+    ============================================= */
+    .social-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #6e9ea8;
+      border: 1px solid rgba(0,255,136,.15);
+      padding: 8px 18px;
+      border-radius: 40px;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: .85rem;
+      transition: color .3s, border-color .3s, background .3s;
+    }
+    .social-link:hover {
+      color: var(--neon);
+      border-color: var(--neon);
+      background: rgba(0,255,136,.06);
+    }
+
+    /* =============================================
+       NÚMERO DE SECCIÓN
+    ============================================= */
+    .section-num {
+      font-family: 'Share Tech Mono', monospace;
+      color: var(--neon);
+      font-size: .8rem;
+      letter-spacing: .15em;
+      opacity: .7;
+    }
+  </style>
 </head>
-<body>
-    <header>
-        <h1>Mihai_<span class="cursor">|</span></h1>
-        <p>Developer & Minecraft Enthusiast</p>
-    </header>
 
-    <section id="projects">
-        <h2>Mis Proyectos</h2>
-        <div class="grid">
-            <div class="card">
-                <h3>xA Addon</h3>
-                <p>Plugin avanzado para Meteor Client. Desarrollado en Java.</p>
-                <span class="tag">Java</span>
+<body class="font-body relative">
+
+  <!-- =============================================
+       FONDO DE CUADRÍCULA (decorativo, fijo)
+  ============================================= -->
+  <div class="grid-bg" aria-hidden="true"></div>
+
+  <!-- =============================================
+       BARRA DE NAVEGACIÓN
+       Fija en la parte superior, transparente al
+       inicio y con fondo oscuro al hacer scroll.
+  ============================================= -->
+  <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 px-6 py-4">
+    <div class="max-w-6xl mx-auto flex items-center justify-between">
+
+      <!-- Logo / nombre corto -->
+      <a href="#hero" class="font-display text-neon text-sm tracking-widest hover:opacity-80 transition-opacity">
+        AM<span class="text-white opacity-50">_</span>
+      </a>
+
+      <!-- Links de navegación (ocultos en móvil pequeño) -->
+      <ul class="hidden sm:flex items-center gap-8 font-mono text-xs tracking-widest text-gray-400">
+        <li><a href="#about"    class="hover:text-neon transition-colors">SOBRE_MÍ</a></li>
+        <li><a href="#skills"   class="hover:text-neon transition-colors">SKILLS</a></li>
+        <li><a href="#projects" class="hover:text-neon transition-colors">PROYECTOS</a></li>
+        <li><a href="#contact"  class="hover:text-neon transition-colors">CONTACTO</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- =============================================
+       SECCIÓN HERO
+       Ocupa toda la pantalla. Muestra el nombre,
+       el título con efecto de escritura y los CTAs.
+  ============================================= -->
+  <section id="hero" class="relative z-10 min-h-screen flex flex-col items-center justify-center text-center px-6 py-24">
+
+    <!-- Aureola decorativa detrás del texto -->
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full pointer-events-none"
+         style="background: radial-gradient(circle, rgba(0,255,136,.06) 0%, transparent 70%);"
+         aria-hidden="true"></div>
+
+    <!-- Etiqueta de status -->
+    <p class="anim-down section-num mb-4 tracking-[.25em]">// BIENVENIDO A MI PORTFOLIO</p>
+
+    <!-- Nombre principal -->
+    <h1 class="anim-up font-display text-5xl sm:text-7xl md:text-8xl font-black text-white leading-none tracking-tight glow-text mb-4">
+      ANDREY<br>
+      <span class="text-neon">MIHAI</span>
+    </h1>
+
+    <!-- Subtítulo con efecto de escritura -->
+    <p class="anim-up2 font-mono text-sm sm:text-base text-gray-400 mb-10" aria-label="Mi rol">
+      <span class="text-neon">></span>&nbsp;
+      <span id="typewriter"></span><span class="cursor" aria-hidden="true"></span>
+    </p>
+
+    <!-- Botones de llamada a la acción -->
+    <div class="anim-up3 flex flex-wrap justify-center gap-4">
+      <a href="#projects"
+         class="btn-neon font-mono text-sm tracking-widest px-8 py-3 rounded-sm">
+        VER PROYECTOS
+      </a>
+      <a href="#contact"
+         class="font-mono text-sm tracking-widest px-8 py-3 rounded-sm border border-gray-700 text-gray-400 hover:border-gray-400 hover:text-white transition-all">
+        CONTACTAR
+      </a>
+    </div>
+
+    <!-- Indicador de scroll hacia abajo -->
+    <div class="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-40"
+         aria-hidden="true">
+      <span class="font-mono text-xs text-gray-500">SCROLL</span>
+      <div class="w-px h-12 bg-gradient-to-b from-neon to-transparent"></div>
+    </div>
+  </section>
+
+  <!-- =============================================
+       SECCIÓN SOBRE MÍ
+  ============================================= -->
+  <section id="about" class="relative z-10 py-24 px-6">
+    <div class="max-w-4xl mx-auto">
+
+      <!-- Encabezado de sección -->
+      <div class="fade-up mb-14 text-center">
+        <p class="section-num mb-2">01</p>
+        <h2 class="font-display text-3xl sm:text-4xl font-bold text-white">
+          SOBRE <span class="text-neon">MÍ</span>
+        </h2>
+        <div class="section-divider mt-4"></div>
+      </div>
+
+      <!-- Contenido en dos columnas en pantallas grandes -->
+      <div class="fade-up grid md:grid-cols-2 gap-10 items-center">
+
+        <!-- Bloque de avatar / decoración -->
+        <div class="flex justify-center">
+          <div class="relative w-52 h-52">
+            <!-- Marco cuadrado animado -->
+            <div class="absolute inset-0 rounded-sm glow-border"
+                 style="background: var(--panel);"></div>
+            <!-- Iniciales centradas -->
+            <div class="absolute inset-0 flex items-center justify-center">
+              <span class="font-display text-6xl font-black text-neon" style="text-shadow: 0 0 30px var(--neon)">AM</span>
             </div>
-            <div class="card">
-                <h3>Custom Client</h3>
-                <p>Desarrollo de cliente propio con optimizaciones de bajo nivel.</p>
-                <span class="tag">C++ / C#</span>
+            <!-- Decoración de esquinas -->
+            <span class="absolute top-0 left-0  w-4 h-4 border-t-2 border-l-2 border-neon"></span>
+            <span class="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-neon"></span>
+            <span class="absolute bottom-0 left-0  w-4 h-4 border-b-2 border-l-2 border-neon"></span>
+            <span class="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-neon"></span>
+          </div>
+        </div>
+
+        <!-- Texto de biografía -->
+        <div class="text-gray-400 leading-relaxed space-y-4">
+          <p class="font-mono text-neon text-sm opacity-70">&lt;bio&gt;</p>
+          <p class="text-base sm:text-lg">
+            Mi nombre es <strong class="text-white">Andrey Mihai</strong>.
+            Soy estudiante y apasionado por el <em class="text-neon not-italic">desarrollo de software</em>.
+            Me encanta explorar nuevas tecnologías, construir proyectos que resuelvan problemas
+            reales y colaborar con otras personas.
+          </p>
+          <p>
+            Actualmente estoy involucrado en varios proyectos dentro del ecosistema de
+            <strong class="text-white">Minecraft</strong>, desarrollando addons para Meteor Client
+            que mejoran la experiencia del juego.
+          </p>
+          <p class="font-mono text-neon text-sm opacity-70">&lt;/bio&gt;</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- DIVISOR VISUAL -->
+  <div class="section-divider" aria-hidden="true"></div>
+
+  <!-- =============================================
+       SECCIÓN HABILIDADES
+       Las skills se muestran como etiquetas (tags)
+  ============================================= -->
+  <section id="skills" class="relative z-10 py-24 px-6">
+    <div class="max-w-4xl mx-auto">
+
+      <!-- Encabezado -->
+      <div class="fade-up mb-14 text-center">
+        <p class="section-num mb-2">02</p>
+        <h2 class="font-display text-3xl sm:text-4xl font-bold text-white">
+          HABILIDADES / <span class="text-neon">SKILLS</span>
+        </h2>
+        <div class="section-divider mt-4"></div>
+      </div>
+
+      <!-- Grid de tags -->
+      <div class="fade-up flex flex-wrap justify-center gap-3" role="list" aria-label="Mis habilidades">
+
+        <!-- ── Añade o elimina skill-tags aquí ── -->
+        <span class="skill-tag px-5 py-2 rounded-sm text-sm cursor-default" role="listitem">HTML</span>
+        <span class="skill-tag px-5 py-2 rounded-sm text-sm cursor-default" role="listitem">CSS</span>
+        <span class="skill-tag px-5 py-2 rounded-sm text-sm cursor-default" role="listitem">JavaScript</span>
+        <span class="skill-tag px-5 py-2 rounded-sm text-sm cursor-default" role="listitem">Python</span>
+        <span class="skill-tag px-5 py-2 rounded-sm text-sm cursor-default" role="listitem">Java</span>
+        <span class="skill-tag px-5 py-2 rounded-sm text-sm cursor-default" role="listitem">C++</span>
+        <span class="skill-tag px-5 py-2 rounded-sm text-sm cursor-default" role="listitem">C</span>
+        <span class="skill-tag px-5 py-2 rounded-sm text-sm cursor-default" role="listitem">Git</span>
+        <span class="skill-tag px-5 py-2 rounded-sm text-sm cursor-default" role="listitem">Trabajo en equipo</span>
+        <span class="skill-tag px-5 py-2 rounded-sm text-sm cursor-default" role="listitem">Diseño Gráfico</span>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- DIVISOR VISUAL -->
+  <div class="section-divider" aria-hidden="true"></div>
+
+  <!-- =============================================
+       SECCIÓN PROYECTOS
+       Cada proyecto es una tarjeta (card) con
+       nombre, descripción y enlace.
+  ============================================= -->
+  <section id="projects" class="relative z-10 py-24 px-6">
+    <div class="max-w-5xl mx-auto">
+
+      <!-- Encabezado -->
+      <div class="fade-up mb-14 text-center">
+        <p class="section-num mb-2">03</p>
+        <h2 class="font-display text-3xl sm:text-4xl font-bold text-white">
+          MIS <span class="text-neon">PROYECTOS</span>
+        </h2>
+        <div class="section-divider mt-4"></div>
+      </div>
+
+      <!-- Grid de tarjetas -->
+      <div class="grid sm:grid-cols-2 gap-6">
+
+        <!-- ══════════════════════════════════════
+             PROYECTO 1: xA Addon
+             Para editar: cambia el nombre, la
+             descripción y el href del enlace.
+        ══════════════════════════════════════ -->
+        <article class="fade-up project-card rounded-sm p-6 flex flex-col gap-4">
+          <!-- Cabecera de la tarjeta -->
+          <div class="flex items-start justify-between gap-2">
+            <div>
+              <p class="font-mono text-neon text-xs opacity-60 mb-1">ADDON · METEOR CLIENT</p>
+              <h3 class="font-display text-xl font-bold text-white">xA Addon</h3>
             </div>
-        </div>
-    </section>
+            <!-- Ícono decorativo -->
+            <div class="w-10 h-10 rounded-sm flex items-center justify-center flex-shrink-0"
+                 style="background: rgba(0,255,136,.08); border: 1px solid rgba(0,255,136,.2)">
+              <svg class="w-5 h-5 text-neon" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                      d="M14 10l-2 1m0 0l-2-1m2 1v2.5M20 7l-2 1m2-1l-2-1m2 1v2.5M14 4l-2-1-2 1M4 7l2-1M4 7l2 1M4 7v2.5M12 21l-2-1m2 1l2-1m-2 1v-2.5M6 18l-2-1v-2.5M18 18l2-1v-2.5"/>
+              </svg>
+            </div>
+          </div>
 
-    <section id="skills">
-        <h2>Lenguajes de Programación</h2>
-        <div class="skills-container">
-            <span>Java</span> <span>C++</span> <span>C</span> <span>Python</span> 
-            <span>C#</span> <span>JS</span> <span>HTML/CSS</span>
-        </div>
-    </section>
+          <!-- Descripción -->
+          <p class="text-gray-400 text-sm leading-relaxed flex-grow">
+            Addon para <em class="text-white not-italic">Meteor Client</em> enfocado en la maza.
+            Optimiza el uso de esta arma en PvP proporcionando ventajas estratégicas
+            dentro del juego.
+          </p>
 
-    <script src="script.js"></script>
-</body>
-</html>
+          <!-- Tags de tecnología -->
+          <div class="flex flex-wrap gap-2 mt-auto">
+            <span class="font-mono text-xs px-2 py-1 rounded-sm text-gray-500"
+                  style="background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08)">Java</span>
+            <span class="font-mono text-xs px-2 py-1 rounded-sm text-gray-500"
+                  style="background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08)">Minecraft</span>
+      
