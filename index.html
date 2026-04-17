@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="es" class="scroll-smooth">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ANDREY MIHAI | DEV</title>
+    <title>ANDREY MIHAI // ARCHITECT</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;600;700&family=JetBrains+Mono:wght@300;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
 
     <script>
@@ -18,11 +18,8 @@
                         mono: ['JetBrains Mono', 'monospace'],
                     },
                     colors: {
-                        cyber: {
-                            green: '#00ffa3',
-                            blue: '#00d1ff',
-                            bg: '#020617',
-                        }
+                        accent: '#00ffa3',
+                        cyberDark: '#020617',
                     }
                 }
             }
@@ -30,271 +27,221 @@
     </script>
 
     <style>
-        :root {
-            --glass: rgba(15, 23, 42, 0.7);
-            --border: rgba(255, 255, 255, 0.1);
-        }
-
-        body {
-            background-color: #020617;
-            color: #f1f5f9;
-            overflow-x: hidden;
-            transition: background-color 0.5s ease;
-        }
-
-        .glass {
-            background: var(--glass);
+        body { background-color: #020617; color: #f1f5f9; cursor: default; }
+        
+        /* Glassmorphism Refinado */
+        .glass-ui {
+            background: rgba(15, 23, 42, 0.8);
             backdrop-filter: blur(20px) saturate(180%);
             -webkit-backdrop-filter: blur(20px) saturate(180%);
-            border: 1px solid var(--border);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        /* Transición entre "Web" y "Terminal" */
-        #web-view, #terminal-view {
-            transition: opacity 0.4s ease, transform 0.4s ease;
+        /* Capas de visualización */
+        .view-active { display: flex !important; animation: fadeIn 0.4s ease forwards; }
+        .view-hidden { display: none !important; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        .view-hidden {
-            display: none;
-            opacity: 0;
-            transform: scale(0.98);
-        }
-
-        /* Estilo Terminal Fullscreen */
-        .terminal-bg {
-            background: radial-gradient(circle at center, #0a0f1e 0%, #020617 100%);
-        }
-
-        .cursor-blink {
-            display: inline-block;
-            width: 8px;
-            height: 18px;
-            background: #00ffa3;
-            animation: blink 1s infinite;
-            vertical-align: middle;
-        }
-        @keyframes blink { 50% { opacity: 0; } }
-
-        /* Menu 3 Puntos */
-        #menu-box {
-            transform-origin: top right;
+        /* Menú Dropdown */
+        #main-menu {
             transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 9999;
         }
-        .menu-off {
-            opacity: 0;
-            transform: scale(0.9) translateY(-10px);
-            pointer-events: none;
-        }
+        .menu-closed { opacity: 0; transform: scale(0.95) translateY(-10px); pointer-events: none; }
 
-        /* Custom Cursor */
-        #mouse-dot {
-            position: fixed;
-            width: 6px;
-            height: 6px;
-            background: #00ffa3;
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 10000;
-        }
+        /* Cursor de terminal */
+        .cursor { display: inline-block; width: 8px; height: 1.2em; background: #00ffa3; animation: blink 1s infinite; vertical-align: middle; }
+        @keyframes blink { 50% { opacity: 0; } }
     </style>
 </head>
-<body class="font-sans">
+<body class="font-sans antialiased overflow-hidden">
 
-    <div id="mouse-dot" class="hidden md:block"></div>
-
-    <main id="web-view" class="min-h-screen relative flex flex-col">
+    <main id="web-view" class="h-screen w-full flex flex-col relative z-10 view-active">
         
-        <nav class="p-8 flex justify-between items-center max-w-7xl mx-auto w-full z-50">
-            <div class="font-bold tracking-tighter text-2xl uppercase">Andrey<span class="text-cyber-green">.</span></div>
+        <nav class="p-6 flex justify-between items-center max-w-7xl mx-auto w-full relative z-[100]">
+            <div class="text-xl font-bold tracking-tighter">ANDREY<span class="text-accent">.</span>SYS</div>
             
             <div class="relative">
-                <button id="dots-btn" class="w-12 h-12 flex items-center justify-center rounded-full hover:bg-white/5 transition-all border border-white/5">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-slate-400">
+                <button id="dots-trigger" class="w-12 h-12 flex items-center justify-center rounded-xl bg-white/5 border border-white/10 hover:border-accent/50 transition-all active:scale-95">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="text-white">
                         <circle cx="12" cy="12" r="1"/><circle cx="12" cy="5" r="1"/><circle cx="12" cy="19" r="1"/>
                     </svg>
                 </button>
 
-                <div id="menu-box" class="menu-off absolute right-0 mt-4 w-64 glass rounded-3xl p-3 z-50 shadow-2xl">
-                    <p class="text-[10px] font-mono text-slate-500 px-4 py-2 uppercase tracking-[0.2em]">System Commands</p>
-                    <button id="open-terminal-btn" class="w-full flex items-center justify-between px-4 py-4 hover:bg-cyber-green/10 rounded-2xl transition-all group">
-                        <span class="font-medium">Run Terminal.exe</span>
-                        <span class="text-cyber-green opacity-50 group-hover:opacity-100 text-xs">CMD</span>
+                <div id="main-menu" class="menu-closed absolute right-0 mt-4 w-64 glass-ui rounded-2xl p-2 shadow-2xl">
+                    <div class="text-[9px] font-mono text-slate-500 p-3 uppercase tracking-widest border-b border-white/5 mb-1">System Navigation</div>
+                    
+                    <button id="go-terminal" class="w-full flex items-center justify-between px-4 py-3 hover:bg-accent/10 rounded-xl transition-all group">
+                        <span class="text-sm font-medium">Terminal Mode</span>
+                        <span class="text-[10px] bg-accent/20 text-accent px-1.5 rounded">CMD</span>
                     </button>
-                    <div class="h-[1px] bg-white/5 my-2"></div>
-                    <a href="https://github.com/andrey828" target="_blank" class="flex items-center justify-between px-4 py-4 hover:bg-white/5 rounded-2xl transition-all">
-                        <span>GitHub</span>
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.041-1.61-4.041-1.61-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+
+                    <a href="https://github.com/andrey828" target="_blank" class="w-full flex items-center justify-between px-4 py-3 hover:bg-white/5 rounded-xl transition-all">
+                        <span class="text-sm">Source Code</span>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.041-1.61-4.041-1.61-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
                     </a>
                 </div>
             </div>
         </nav>
 
-        <section class="flex-1 flex flex-col justify-center px-8 md:px-24">
-            <div class="max-w-4xl space-y-8">
-                <div class="inline-block px-4 py-1.5 glass rounded-full border-cyber-green/20 text-cyber-green font-mono text-xs uppercase tracking-[0.3em]">
-                    System Architect
-                </div>
+        <section class="flex-1 flex flex-col justify-center px-8 md:px-24 max-w-6xl mx-auto w-full">
+            <div class="space-y-6">
+                <h1 class="text-6xl md:text-8xl font-bold tracking-tighter leading-none">
+                    ANDREY MIHAI
+                </h1>
                 
-                <h2 class="text-5xl md:text-8xl font-bold tracking-tighter leading-[0.9]">
-                    CREANDO <br> <span class="text-transparent" style="-webkit-text-stroke: 1px rgba(255,255,255,0.3)">SOLUCIONES</span> <br> EFICIENTES.
-                </h2>
-
-                <p class="text-slate-400 text-lg md:text-xl max-w-2xl leading-relaxed font-light">
-                    Estudiante de desarrollo de software enfocado en la arquitectura de sistemas y la optimización. 
-                    Especialista en la creación de <span class="text-white">addons para Minecraft (Java/Fabric API)</span>, 
-                    con un interés profundo en el rendimiento y la eficiencia del código. 
-                    Busco transformar la lógica compleja en herramientas funcionales y disruptivas.
+                <p class="text-slate-400 text-lg md:text-xl max-w-2xl leading-relaxed">
+                    Estudiante de desarrollo de software enfocado en la <span class="text-white">arquitectura de sistemas</span> y la optimización. 
+                    Especialista en la creación de addons para Minecraft (<span class="text-accent">Java/Fabric API</span>).
+                    Mi enfoque es transformar lógica compleja en herramientas de alto rendimiento.
                 </p>
 
-                <div class="flex flex-wrap gap-4 pt-8">
-                    <a href="https://github.com/andrey828" target="_blank" class="glass px-8 py-5 rounded-3xl hover:border-cyber-green transition-all group flex items-center gap-4">
-                        <span class="text-sm font-bold uppercase tracking-widest">GitHub</span>
-                        <span class="text-slate-500 font-mono text-xs">@andrey828</span>
+                <div class="flex flex-wrap gap-4 pt-4">
+                    <a href="https://github.com/andrey828" target="_blank" class="px-8 py-4 bg-white/5 border border-white/10 rounded-2xl hover:bg-white/10 hover:border-accent transition-all flex items-center gap-3 group">
+                        <span class="font-bold text-sm uppercase tracking-widest">GitHub</span>
+                        <span class="text-xs text-slate-500 group-hover:text-accent font-mono">andrey828</span>
                     </a>
-                    <div class="glass px-8 py-5 rounded-3xl transition-all flex items-center gap-4">
-                        <span class="text-sm font-bold uppercase tracking-widest">Discord</span>
-                        <span class="text-cyber-blue font-mono text-xs">xandrey___</span>
+                    
+                    <div id="discord-copy" class="px-8 py-4 bg-white/5 border border-white/10 rounded-2xl hover:bg-white/10 hover:border-accent transition-all flex items-center gap-3 cursor-pointer group">
+                        <span class="font-bold text-sm uppercase tracking-widest">Discord</span>
+                        <span class="text-xs text-slate-500 group-hover:text-accent font-mono">xandrey___</span>
                     </div>
                 </div>
             </div>
         </section>
 
-        <div class="absolute inset-0 z-[-1] pointer-events-none">
-            <div class="absolute top-1/4 right-1/4 w-96 h-96 bg-cyber-green/5 blur-[120px] rounded-full"></div>
-            <div class="absolute bottom-1/3 left-1/4 w-96 h-96 bg-cyber-blue/5 blur-[120px] rounded-full"></div>
+        <div class="fixed inset-0 z-[-1] opacity-30">
+            <div class="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_50%_-20%,#00ffa333,transparent_50%)]"></div>
         </div>
     </main>
 
-    <div id="terminal-view" class="view-hidden fixed inset-0 z-[1000] terminal-bg flex flex-col font-mono">
-        
-        <div class="p-4 border-b border-white/5 flex items-center justify-between bg-black/40">
-            <div class="flex items-center gap-4">
-                <div class="flex gap-1.5">
-                    <div class="w-3 h-3 rounded-full bg-red-500/20 border border-red-500/40"></div>
-                    <div class="w-3 h-3 rounded-full bg-yellow-500/20 border border-yellow-500/40"></div>
-                    <div class="w-3 h-3 rounded-full bg-green-500/20 border border-green-500/40"></div>
-                </div>
-                <span class="text-[10px] text-slate-500 uppercase tracking-widest">andrey@macbook — kernel — 80x24</span>
+    <section id="terminal-view" class="h-screen w-full bg-[#010409] flex-col font-mono view-hidden relative z-[5000]">
+        <div class="p-4 bg-white/5 border-b border-white/10 flex justify-between items-center">
+            <div class="flex gap-2">
+                <div class="w-3 h-3 rounded-full bg-red-500/50"></div>
+                <div class="w-3 h-3 rounded-full bg-yellow-500/50"></div>
+                <div class="w-3 h-3 rounded-full bg-green-500/50"></div>
             </div>
-            <button id="exit-terminal-btn" class="text-[10px] text-red-400 hover:text-red-300 uppercase tracking-tighter">Exit_System [esc]</button>
+            <button id="close-terminal" class="text-[10px] text-slate-500 hover:text-white uppercase tracking-widest font-bold">Cerrar Sesión [Esc]</button>
         </div>
 
-        <div id="console-body" class="flex-1 p-8 md:p-12 overflow-y-auto text-sm md:text-base leading-relaxed">
-            <div id="log-output" class="space-y-2 mb-6">
-                <p class="text-cyber-green">ANDREY_OS [Version 5.0.1]</p>
-                <p class="text-slate-500">Iniciando entorno de desarrollo seguro...</p>
-                <p class="text-slate-500 italic">"Simplicity is the soul of efficiency."</p>
+        <div id="term-container" class="flex-1 p-8 overflow-y-auto text-sm md:text-base">
+            <div id="term-output" class="space-y-1 mb-4">
+                <p class="text-accent font-bold">ANDREY_OS [Version 5.0.0]</p>
+                <p class="text-slate-500">Iniciando sesión en el núcleo del sistema...</p>
                 <br>
-                <p>Escribe <span class="text-cyber-blue">'help'</span> para ver los comandos disponibles o <span class="text-red-400">'exit'</span> para volver a la interfaz gráfica.</p>
+                <p>Bienvenido. Escribe <span class="text-accent underline">'help'</span> para ver los comandos.</p>
                 <br>
             </div>
-
-            <div class="flex items-start gap-4">
-                <span class="text-cyber-green font-bold">andrey828@root:~$</span>
-                <input type="text" id="console-input" 
-                       class="bg-transparent border-none outline-none flex-1 text-white caret-transparent"
-                       autocomplete="off" spellcheck="false" autofocus>
-                <div class="cursor-blink"></div>
+            
+            <div class="flex items-center gap-2">
+                <span class="text-accent font-bold">andrey@root:~$</span>
+                <input type="text" id="term-input" class="bg-transparent border-none outline-none flex-1 text-white" autofocus autocomplete="off">
+                <div class="cursor"></div>
             </div>
         </div>
+    </section>
+
+    <div id="toast" class="fixed bottom-10 left-1/2 -translate-x-1/2 px-6 py-3 glass-ui rounded-full text-xs font-mono text-accent opacity-0 transition-opacity pointer-events-none z-[10000]">
+        Copiado al portapapeles: xandrey___
     </div>
 
     <script>
-        // Elementos UI
+        // Selectores
+        const dotsBtn = document.getElementById('dots-trigger');
+        const mainMenu = document.getElementById('main-menu');
         const webView = document.getElementById('web-view');
         const termView = document.getElementById('terminal-view');
-        const dotsBtn = document.getElementById('dots-btn');
-        const menuBox = document.getElementById('menu-box');
-        const openTermBtn = document.getElementById('open-terminal-btn');
-        const exitTermBtn = document.getElementById('exit-terminal-btn');
-        const consoleInput = document.getElementById('console-input');
-        const logOutput = document.getElementById('log-output');
-        const consoleBody = document.getElementById('console-body');
-        const mouseDot = document.getElementById('mouse-dot');
+        const openTerm = document.getElementById('go-terminal');
+        const closeTerm = document.getElementById('close-terminal');
+        const termInput = document.getElementById('term-input');
+        const termOutput = document.getElementById('term-output');
+        const termContainer = document.getElementById('term-container');
+        const discordBtn = document.getElementById('discord-copy');
+        const toast = document.getElementById('toast');
 
-        // 1. Control Cursor
-        document.addEventListener('mousemove', (e) => {
-            mouseDot.style.left = e.clientX + 'px';
-            mouseDot.style.top = e.clientY + 'px';
-        });
-
-        // 2. Menu Dots Toggle
-        dotsBtn.addEventListener('click', (e) => {
+        // 1. Lógica del Menú de 3 Puntos
+        dotsBtn.onclick = (e) => {
             e.stopPropagation();
-            menuBox.classList.toggle('menu-off');
-        });
+            mainMenu.classList.toggle('menu-closed');
+        };
 
-        document.addEventListener('click', () => menuBox.classList.add('menu-off'));
+        window.onclick = () => mainMenu.classList.add('menu-closed');
 
-        // 3. Cambio de "Web" a "Terminal" (Simulando otra página)
-        function toggleTerminal(show) {
-            if(show) {
-                webView.classList.add('view-hidden');
-                setTimeout(() => {
-                    termView.classList.remove('view-hidden');
-                    consoleInput.focus();
-                }, 400);
-            } else {
-                termView.classList.add('view-hidden');
-                setTimeout(() => {
-                    webView.classList.remove('view-hidden');
-                }, 400);
-            }
+        // 2. Transición a Terminal
+        function enterTerminal() {
+            mainMenu.classList.add('menu-closed');
+            webView.classList.replace('view-active', 'view-hidden');
+            termView.classList.replace('view-hidden', 'view-active');
+            setTimeout(() => termInput.focus(), 100);
         }
 
-        openTermBtn.addEventListener('click', () => toggleTerminal(true));
-        exitTermBtn.addEventListener('click', () => toggleTerminal(false));
+        function exitTerminal() {
+            termView.classList.replace('view-active', 'view-hidden');
+            webView.classList.replace('view-hidden', 'view-active');
+        }
 
-        // 4. Comandos de la Terminal
-        const CMDS = {
-            'help': 'Comandos disponibles: <br>- <b>bio</b>: Información sobre mi carrera <br>- <b>skills</b>: Mi stack tecnológico <br>- <b>github</b>: Abre mi perfil de GitHub <br>- <b>clear</b>: Limpia la consola <br>- <b>exit</b>: Regresa a la web',
-            'bio': 'Estudiante de desarrollo de software enfocado en la arquitectura de sistemas y la optimización. Especialista en Minecraft Addons (Java/Fabric).',
-            'skills': '<b>Languages:</b> Java, C++, Python, JavaScript <br><b>Frameworks:</b> Fabric API, TailwindCSS, Node.js <br><b>Focus:</b> Performance & Systems Architecture',
-            'github': 'Redirigiendo a github.com/andrey828...',
+        openTerm.onclick = enterTerminal;
+        closeTerm.onclick = exitTerminal;
+
+        // Tecla escape para salir
+        window.onkeydown = (e) => {
+            if(e.key === 'Escape' && termView.classList.contains('view-active')) exitTerminal();
+        };
+
+        // 3. Lógica de Comandos
+        const COMMANDS = {
+            'help': 'Comandos: bio, github, discord, clear, exit',
+            'bio': 'Andrey Mihai: Arquitecto de software y desarrollador de Minecraft Addons en Java.',
+            'github': 'Visita: github.com/andrey828 (Abriendo en pestaña...)',
+            'discord': 'Usuario: xandrey___',
             'clear': 'CLEAR'
         };
 
-        consoleInput.addEventListener('keydown', (e) => {
+        termInput.onkeydown = (e) => {
             if (e.key === 'Enter') {
-                const raw = consoleInput.value.trim();
-                const cmd = raw.toLowerCase();
+                const val = termInput.value.trim().toLowerCase();
                 
-                if (cmd === 'exit') {
-                    toggleTerminal(false);
-                    consoleInput.value = '';
-                    return;
+                if (val === 'exit') { exitTerminal(); termInput.value = ''; return; }
+
+                // Echo
+                const p = document.createElement('p');
+                p.innerHTML = `<span class="text-accent">andrey@root:~$</span> ${termInput.value}`;
+                termOutput.appendChild(p);
+
+                // Response
+                const r = document.createElement('p');
+                r.className = 'text-slate-400 pl-4 mb-2';
+
+                if (val === 'clear') {
+                    termOutput.innerHTML = '';
+                } else if (COMMANDS[val]) {
+                    r.innerHTML = COMMANDS[val];
+                    termOutput.appendChild(r);
+                    if(val === 'github') window.open('https://github.com/andrey828', '_blank');
+                } else if (val !== '') {
+                    r.innerHTML = `Comando no encontrado: ${val}`;
+                    termOutput.appendChild(r);
                 }
 
-                // Eco del comando
-                const echo = document.createElement('div');
-                echo.innerHTML = `<span class="text-cyber-green font-bold">andrey828@root:~$</span> ${raw}`;
-                logOutput.appendChild(echo);
-
-                // Respuesta
-                const res = document.createElement('div');
-                res.className = 'text-slate-400 pl-4 border-l border-white/10 mb-4 mt-1';
-
-                if (cmd === 'clear') {
-                    logOutput.innerHTML = '';
-                } else if (CMDS[cmd]) {
-                    res.innerHTML = CMDS[cmd];
-                    logOutput.appendChild(res);
-                    if(cmd === 'github') setTimeout(() => window.open('https://github.com/andrey828', '_blank'), 1000);
-                } else if (cmd !== "") {
-                    res.innerHTML = `<span class="text-red-400 italic">Comando no reconocido: ${cmd}. Prueba con 'help'.</span>`;
-                    logOutput.appendChild(res);
-                }
-
-                consoleInput.value = '';
-                consoleBody.scrollTop = consoleBody.scrollHeight;
+                termInput.value = '';
+                termContainer.scrollTop = termContainer.scrollHeight;
             }
+        };
 
-            // Tecla escape para salir
-            if (e.key === 'Escape') toggleTerminal(false);
-        });
+        // 4. Copiar Discord al Portapapeles
+        discordBtn.onclick = () => {
+            navigator.clipboard.writeText('xandrey___');
+            toast.style.opacity = '1';
+            setTimeout(() => toast.style.opacity = '0', 2000);
+        };
 
-        // Auto-focus terminal al hacer click
-        consoleBody.addEventListener('click', () => consoleInput.focus());
+        // Forzar focus en terminal
+        termContainer.onclick = () => termInput.focus();
 
     </script>
 </body>
