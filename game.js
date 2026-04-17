@@ -1,86 +1,63 @@
-let gameInterval, snake, food, dx, dy, score;
-const box = 20;
-
-function initSnakeGame() {
-    stopSnakeGame();
+let gameInterval;
+window.initSnakeGame = function() {
+    window.stopSnakeGame();
     const canvas = document.getElementById("snakeCanvas");
     const ctx = canvas.getContext("2d");
+    const scoreEl = document.getElementById('game-score');
     
-    snake = [{x: 200, y: 200}, {x: 180, y: 200}, {x: 160, y: 200}];
-    dx = 20; dy = 0; score = 0;
-    document.getElementById('game-score').innerText = score;
-    
-    createFood();
+    let snake = [{x: 200, y: 200}];
+    let food = {x: 100, y: 100};
+    let dx = 20, dy = 0;
+    let score = 0;
 
-    function draw() {
-        if (isGameOver()) {
-            stopSnakeGame();
-            alert("GAME OVER - Score: " + score);
-            initSnakeGame();
+    function main() {
+        if (hit()) {
+            alert("Fin del juego. Puntuación: " + score);
+            window.initSnakeGame();
             return;
         }
 
-        ctx.fillStyle = "#010409";
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = "black";
+        ctx.fillRect(0, 0, 400, 400);
 
-        // Dibujar comida
+        // Comida
         ctx.fillStyle = "#00d1ff";
-        ctx.fillRect(food.x, food.y, box, box);
+        ctx.fillRect(food.x, food.y, 18, 18);
 
-        // Dibujar serpiente
-        snake.forEach((part, i) => {
-            ctx.fillStyle = i === 0 ? "#00ffa3" : "rgba(0, 255, 163, 0.3)";
-            ctx.fillRect(part.x, part.y, box, box);
-        });
+        // Serpiente
+        ctx.fillStyle = "#00ffa3";
+        snake.forEach(p => ctx.fillRect(p.x, p.y, 18, 18));
 
-        // Mover cabeza
         const head = {x: snake[0].x + dx, y: snake[0].y + dy};
-        
+        snake.unshift(head);
+
         if (head.x === food.x && head.y === food.y) {
             score++;
-            document.getElementById('game-score').innerText = score;
-            createFood();
+            scoreEl.innerText = score;
+            food = {
+                x: Math.floor(Math.random() * 19) * 20,
+                y: Math.floor(Math.random() * 19) * 20
+            };
         } else {
             snake.pop();
         }
-        
-        snake.unshift(head);
     }
 
-    function isGameOver() {
+    function hit() {
         const h = snake[0];
-        const hitWall = h.x < 0 || h.x >= canvas.width || h.y < 0 || h.y >= canvas.height;
-        const hitSelf = snake.slice(1).some(part => part.x === h.x && part.y === h.y);
-        return hitWall || hitSelf;
+        return h.x < 0 || h.x >= 400 || h.y < 0 || h.y >= 400;
     }
 
-    function createFood() {
-        food = {
-            x: Math.floor(Math.random() * 19) * box,
-            y: Math.floor(Math.random() * 19) * box
-        };
-    }
-
-    // Listener de teclado específico para el juego
-    const handleKeys = (e) => {
-        if (e.key === 'ArrowUp' && dy === 0) { dx = 0; dy = -box; }
-        if (e.key === 'ArrowDown' && dy === 0) { dx = 0; dy = box; }
-        if (e.key === 'ArrowLeft' && dx === 0) { dx = -box; dy = 0; }
-        if (e.key === 'ArrowRight' && dx === 0) { dx = box; dy = 0; }
+    document.onkeydown = (e) => {
+        if (e.key === 'ArrowUp' && dy === 0) { dx = 0; dy = -20; }
+        if (e.key === 'ArrowDown' && dy === 0) { dx = 0; dy = 20; }
+        if (e.key === 'ArrowLeft' && dx === 0) { dx = -20; dy = 0; }
+        if (e.key === 'ArrowRight' && dx === 0) { dx = 20; dy = 0; }
     };
 
-    document.addEventListener('keydown', handleKeys);
-    gameInterval = setInterval(draw, 100);
-
-    // Guardar referencia para limpiar el listener luego
-    window._gameKeyListener = handleKeys;
+    gameInterval = setInterval(main, 100);
 }
 
-function stopSnakeGame() {
+window.stopSnakeGame = function() {
     clearInterval(gameInterval);
-    if (window._gameKeyListener) {
-        document.removeEventListener('keydown', window._gameKeyListener);
-    }
 }
-
-document.getElementById('reset-game-btn').addEventListener('click', initSnakeGame);
