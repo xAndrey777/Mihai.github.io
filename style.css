@@ -1,10 +1,4 @@
-body {
-    background-color: #020617;
-    color: #f1f5f9;
-    overflow: hidden;
-    margin: 0;
-}
-
+/* Glassmorphism */
 .glass {
     background: rgba(15, 23, 42, 0.8);
     backdrop-filter: blur(20px);
@@ -12,6 +6,7 @@ body {
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
+/* Control de Vistas */
 .view {
     display: none;
     opacity: 0;
@@ -28,16 +23,22 @@ body {
     z-index: 10;
 }
 
+/* Menú */
 .menu-hidden {
     opacity: 0;
     transform: scale(0.95) translateY(-10px);
     pointer-events: none;
 }
 
-.text-accent { color: #00ffa3; }
-.text-cyberBlue { color: #00d1ff; }
-
+/* Canvas */
 #snakeCanvas {
     background: #000;
-    border: 1px solid rgba(0, 255, 163, 0.3);
+    box-shadow: 0 0 30px rgba(0, 209, 255, 0.1);
+    border: 1px solid rgba(0, 209, 255, 0.2);
+    border-radius: 8px;
+}
+
+/* Terminal input focus */
+#term-input:focus {
+    outline: none;
 }
