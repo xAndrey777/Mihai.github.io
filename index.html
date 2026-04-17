@@ -3,50 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ANDREY MIHAI // CORE v8.0</title>
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <title>ANDREY MIHAI // SYSTEM</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    
     <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+    <script src="game.js" defer></script>
 </head>
-<body class="font-sans antialiased">
+<body class="font-sans antialiased overflow-hidden bg-[#020617] text-white">
 
-    <nav id="nav-global" class="fixed top-0 w-full p-6 flex justify-between items-center">
-        <div class="text-xl font-bold tracking-tighter">ANDREY<span class="text-accent">.</span>OS</div>
+    <nav class="fixed top-0 w-full p-6 flex justify-between items-center z-[10000]">
+        <div class="text-xl font-bold tracking-tighter">ANDREY<span class="text-[#00ffa3]">.</span>OS</div>
         <div class="relative">
-            <button id="dots-btn" class="w-12 h-12 flex items-center justify-center rounded-xl glass hover:border-accent/50 transition-all">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                    <circle cx="12" cy="12" r="1"/><circle cx="12" cy="5" r="1"/><circle cx="12" cy="19" r="1"/>
-                </svg>
+            <button id="dots-btn" class="w-12 h-12 flex items-center justify-center rounded-xl glass hover:border-[#00ffa3]/50 transition-all">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="1"/><circle cx="12" cy="5" r="1"/><circle cx="12" cy="19" r="1"/></svg>
             </button>
             <div id="dropdown-menu" class="menu-hidden absolute right-0 mt-4 w-64 glass rounded-2xl p-2 shadow-2xl">
-                <button onclick="changeView('terminal')" class="w-full flex items-center justify-between px-4 py-3 hover:bg-accent/10 rounded-xl transition-all">Console Terminal</button>
-                <button onclick="changeView('game')" class="w-full flex items-center justify-between px-4 py-3 hover:bg-cyberBlue/10 rounded-xl transition-all">Cyber Snake</button>
-                <a href="https://github.com/andrey828" target="_blank" class="w-full flex items-center justify-between px-4 py-3 hover:bg-white/5 rounded-xl transition-all">GitHub</a>
+                <button id="btn-terminal" class="w-full text-left px-4 py-3 hover:bg-[#00ffa3]/10 rounded-xl transition-all">Console Terminal</button>
+                <button id="btn-game" class="w-full text-left px-4 py-3 hover:bg-[#00d1ff]/10 rounded-xl transition-all">Cyber Snake</button>
+                <a href="https://github.com/andrey828" target="_blank" class="block px-4 py-3 hover:bg-white/5 rounded-xl transition-all">GitHub</a>
             </div>
         </div>
     </nav>
 
     <main id="view-home" class="view view-active flex flex-col justify-center px-8 md:px-24">
         <h1 class="text-6xl md:text-8xl font-bold tracking-tighter">ANDREY MIHAI</h1>
-        <p class="text-slate-400 text-lg md:text-xl max-w-2xl mt-4">Arquitecto de software y especialista en Minecraft Addons.</p>
+        <p class="text-slate-400 text-lg md:text-xl max-w-2xl mt-4 italic">Arquitecto de Software & Developer</p>
     </main>
 
     <section id="view-terminal" class="view flex-col bg-black">
-        <div id="term-container" class="flex-1 p-8 overflow-y-auto font-mono mt-20">
+        <div id="term-container" class="flex-1 p-8 overflow-y-auto font-mono mt-20 text-sm md:text-base">
             <div id="term-log"></div>
-            <input type="text" id="term-input" class="bg-transparent border-none outline-none w-full text-white" autofocus>
+            <div class="flex gap-2">
+                <span class="text-[#00ffa3]">root@andrey:~$</span>
+                <input type="text" id="term-input" class="bg-transparent border-none outline-none flex-1" autofocus autocomplete="off">
+            </div>
         </div>
     </section>
 
     <section id="view-game" class="view flex-col items-center justify-center bg-[#010409]">
-        <canvas id="snakeCanvas" width="400" height="400"></canvas>
-        <button onclick="initSnakeGame()" class="mt-4 text-cyberBlue">REINICIAR JUEGO</button>
+        <canvas id="snakeCanvas" width="400" height="400" class="mt-16"></canvas>
+        <div class="mt-6 flex gap-4">
+            <button id="reset-game" class="px-6 py-2 bg-[#00d1ff]/20 border border-[#00d1ff]/40 text-[#00d1ff] rounded-lg">Reiniciar</button>
+            <button id="exit-game" class="px-6 py-2 glass rounded-lg">Salir</button>
+        </div>
     </section>
 
-    <script src="script.js"></script>
-    <script src="game.js"></script>
 </body>
 </html>
