@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Andrey Mihai — Next Level. Desarrollador de experiencias visuales avanzadas, addons de Minecraft y frontend futurista. Cristales iOS-level + cursor custom ultra premium.">
-    <meta name="keywords" content="Andrey Mihai, Minecraft Addons, Frontend, Glassmorphism iOS, Crystal Effects, Portfolio Futurista">
-    <title>Andrey Mihai — Next Level</title>
+    <meta name="description" content="Andrey Mihai — Desarrollador de addons Minecraft y frontend moderno.">
+    <title>Andrey Mihai — Portfolio</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&amp;family=Share+Tech+Mono&amp;family=Nunito:wght@300;400;600;700&amp;display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -19,11 +18,7 @@
             --glass-bg: rgba(255,255,255,0.08);
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: 'Nunito', system-ui, sans-serif;
@@ -33,32 +28,30 @@
             cursor: none;
         }
 
-        /* ======================== ULTRA ENHANCED BACKGROUND SYSTEM ======================== */
+        /* ======================== BACKGROUND ======================== */
         .bg-animated {
             position: fixed;
             inset: 0;
             z-index: -3;
             background: 
-                radial-gradient(circle at 20% 30%, rgba(0, 255, 136, 0.25) 0%, transparent 50%),
-                radial-gradient(circle at 80% 70%, rgba(0, 204, 255, 0.25) 0%, transparent 50%),
-                radial-gradient(circle at 50% 50%, rgba(124, 58, 237, 0.25) 0%, transparent 60%),
+                radial-gradient(circle at 20% 30%, rgba(0, 255, 136, 0.22) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(0, 204, 255, 0.22) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(124, 58, 237, 0.22) 0%, transparent 60%),
                 linear-gradient(180deg, #050a0e 0%, #0a1320 100%);
             animation: moveBg 18s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite alternate;
-            filter: contrast(120%) brightness(1.1);
         }
 
         @keyframes moveBg {
             0% { transform: translate(0, 0) rotate(0deg); }
-            100% { transform: translate(-60px, -80px) rotate(8deg); }
+            100% { transform: translate(-40px, -60px) rotate(6deg); }
         }
 
-        /* iOS-style dynamic noise + vignette */
         .noise {
             position: fixed;
             inset: 0;
             z-index: -2;
             background: url("https://grainy-gradients.vercel.app/noise.svg") repeat;
-            opacity: 0.08;
+            opacity: 0.07;
             mix-blend-mode: overlay;
             animation: noiseAnim 8s steps(10) infinite;
             pointer-events: none;
@@ -66,39 +59,38 @@
 
         @keyframes noiseAnim {
             0%, 100% { background-position: 0 0; }
-            50% { background-position: 40px 40px; }
+            50% { background-position: 30px 30px; }
         }
 
         .vignette {
             position: fixed;
             inset: 0;
             z-index: -1;
-            background: radial-gradient(circle at center, transparent 60%, rgba(5,10,14,0.85) 100%);
+            background: radial-gradient(circle at center, transparent 65%, rgba(5,10,14,0.8) 100%);
             pointer-events: none;
         }
 
-        /* ======================== CANVAS PARTICLES - CRYSTAL NEBULA ======================== */
+        /* ======================== PARTICLES ======================== */
         #particle-canvas {
             position: fixed;
             inset: 0;
             z-index: -2;
-            opacity: 0.75;
+            opacity: 0.7;
             pointer-events: none;
         }
 
-        /* ======================== IOS CRYSTAL GLASS SYSTEM (100000% UPGRADED) ======================== */
+        /* ======================== CRYSTAL GLASS (iPhone style) ======================== */
         .glass, .crystal {
             background: var(--glass-bg);
-            backdrop-filter: blur(48px) saturate(180%) contrast(110%) brightness(1.15);
-            -webkit-backdrop-filter: blur(48px) saturate(180%) contrast(110%) brightness(1.15);
+            backdrop-filter: blur(48px) saturate(180%) contrast(115%) brightness(1.12);
+            -webkit-backdrop-filter: blur(48px) saturate(180%) contrast(115%) brightness(1.12);
             border: 1px solid rgba(255,255,255,0.22);
             border-radius: 28px;
             box-shadow: 
                 0 25px 70px -15px rgba(0, 0, 0, 0.4),
-                0 10px 30px -10px rgba(124, 58, 237, 0.3),
-                inset 0 1.5px 0 rgba(255,255,255,0.45),
-                inset 0 -1.5px 0 rgba(0,0,0,0.25);
-            transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+                inset 0 2px 0 rgba(255,255,255,0.4),
+                inset 0 -2px 0 rgba(0,0,0,0.2);
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
             position: relative;
             overflow: hidden;
         }
@@ -106,20 +98,11 @@
         .crystal::before {
             content: '';
             position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 40%;
-            height: 300%;
-            background: linear-gradient(
-                120deg,
-                transparent,
-                rgba(255,255,255,0.45) 45%,
-                rgba(255,255,255,0.45) 55%,
-                transparent
-            );
+            inset: -150%;
+            background: linear-gradient(120deg, transparent, rgba(255,255,255,0.5) 45%, rgba(255,255,255,0.5) 55%, transparent);
             transform: rotate(25deg);
-            animation: crystalShine 5s linear infinite;
-            opacity: 0.35;
+            animation: crystalShine 4.5s linear infinite;
+            opacity: 0.4;
             pointer-events: none;
             z-index: 1;
             mix-blend-mode: screen;
@@ -127,44 +110,27 @@
 
         @keyframes crystalShine {
             0% { transform: translateX(-150%) rotate(25deg); }
-            100% { transform: translateX(300%) rotate(25deg); }
+            100% { transform: translateX(350%) rotate(25deg); }
         }
 
         .crystal:hover {
-            transform: translateY(-12px) scale(1.04) rotate(1deg);
-            box-shadow: 
-                0 40px 100px -20px rgba(0, 255, 136, 0.4),
-                0 20px 50px -15px rgba(124, 58, 237, 0.5),
-                inset 0 2px 0 rgba(255,255,255,0.6);
-            border-color: rgba(0, 255, 136, 0.4);
+            transform: translateY(-8px) scale(1.03);
+            box-shadow: 0 35px 80px -15px rgba(0, 255, 136, 0.35);
+            border-color: rgba(0, 255, 136, 0.35);
         }
 
-        .crystal .inner-glow {
-            position: absolute;
-            inset: 0;
-            border-radius: 28px;
-            box-shadow: inset 0 0 60px -20px var(--neon-cyan);
-            opacity: 0;
-            transition: opacity 0.4s ease;
-            pointer-events: none;
-        }
-
-        .crystal:hover .inner-glow {
-            opacity: 0.6;
-        }
-
-        /* ======================== CUSTOM CURSOR - PREMIUM CRYSTAL ORB ======================== */
+        /* ======================== CUSTOM CURSOR ======================== */
         #custom-cursor {
             position: fixed;
-            width: 42px;
-            height: 42px;
+            width: 40px;
+            height: 40px;
             pointer-events: none;
             z-index: 999999;
             display: flex;
             align-items: center;
             justify-content: center;
             transform: translate(-50%, -50%);
-            transition: width 0.2s ease, height 0.2s ease, filter 0.3s ease;
+            transition: all 0.25s ease;
         }
 
         #cursor-core {
@@ -173,77 +139,68 @@
             background: radial-gradient(circle, #00ff88, #00ccff);
             border-radius: 50%;
             box-shadow: 
-                0 0 25px #00ff88,
-                0 0 45px #00ccff,
-                0 0 65px rgba(124, 58, 237, 0.6);
-            animation: cursorPulse 2s ease-in-out infinite;
+                0 0 22px #00ff88,
+                0 0 42px #00ccff,
+                0 0 62px rgba(124, 58, 237, 0.5);
+            animation: cursorPulse 1.8s ease-in-out infinite;
             position: relative;
         }
 
         #cursor-core::after {
             content: '';
             position: absolute;
-            inset: -12px;
-            border: 2px solid rgba(255,255,255,0.4);
+            inset: -14px;
+            border: 2px solid rgba(255,255,255,0.45);
             border-radius: 50%;
-            animation: cursorRing 3s linear infinite;
+            animation: cursorRing 2.8s linear infinite;
         }
 
-        @keyframes cursorPulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.15); }
-        }
+        @keyframes cursorPulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.12); } }
+        @keyframes cursorRing { 0% { transform: scale(0.7); opacity: 1; } 100% { transform: scale(2.4); opacity: 0; } }
 
-        @keyframes cursorRing {
-            0% { transform: scale(0.8); opacity: 0.8; }
-            100% { transform: scale(2.2); opacity: 0; }
-        }
-
-        /* Hover states for interactive elements */
+        /* Hover cursor change */
         a:hover ~ #custom-cursor #cursor-core,
         button:hover ~ #custom-cursor #cursor-core,
-        .glass:hover ~ #custom-cursor #cursor-core {
+        .glass:hover ~ #custom-cursor #cursor-core,
+        .crystal:hover ~ #custom-cursor #cursor-core {
+            width: 20px;
+            height: 20px;
             background: radial-gradient(circle, #7c3aed, #00ff88);
-            box-shadow: 
-                0 0 30px #7c3aed,
-                0 0 55px #00ccff;
         }
 
-        /* ======================== NAVBAR - iOS FLOATING PILL ======================== */
+        /* ======================== NAVBAR ======================== */
         .navbar {
             position: fixed;
-            top: 24px;
+            top: 20px;
             left: 50%;
             transform: translateX(-50%);
             background: rgba(255,255,255,0.07);
-            backdrop-filter: blur(40px) saturate(200%);
-            -webkit-backdrop-filter: blur(40px) saturate(200%);
+            backdrop-filter: blur(40px);
             border: 1px solid rgba(255,255,255,0.18);
             border-radius: 9999px;
-            padding: 12px 32px;
+            padding: 12px 30px;
             z-index: 9999;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+            transition: all 0.4s ease;
         }
 
         .navbar.scrolled {
             top: 12px;
-            padding: 10px 28px;
-            background: rgba(255,255,255,0.12);
+            padding: 10px 26px;
+            background: rgba(255,255,255,0.13);
         }
 
-        /* ======================== HERO - FULL IMMERSIVE ======================== */
+        /* ======================== HERO ======================== */
         .hero-title {
             font-family: 'Orbitron', sans-serif;
-            font-size: clamp(4rem, 10vw, 8rem);
+            font-size: clamp(3.8rem, 9vw, 7.5rem);
             font-weight: 900;
-            letter-spacing: -4px;
+            letter-spacing: -3px;
             background: linear-gradient(90deg, #00ff88, #00ccff, #7c3aed, #00ff88);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            animation: heroGradient 8s linear infinite;
-            text-shadow: 0 0 80px rgba(0, 255, 136, 0.6);
+            animation: heroGradient 7s linear infinite;
         }
 
         @keyframes heroGradient {
@@ -251,38 +208,28 @@
             100% { background-position: 200% 50%; }
         }
 
-        .hero-subtitle {
-            font-family: 'Share Tech Mono', monospace;
-            font-size: 1.35rem;
-            color: #a5f3fc;
-            text-shadow: 0 0 30px rgba(165, 243, 252, 0.5);
-        }
-
-        /* ======================== BUTTONS - iOS CRYSTAL ======================== */
-        .btn-primary {
-            padding: 18px 42px;
+        /* ======================== BUTTONS ======================== */
+        .btn {
+            padding: 16px 36px;
             border-radius: 9999px;
-            font-weight: 700;
-            font-size: 1.1rem;
-            background: linear-gradient(90deg, rgba(0,255,136,0.15), rgba(0,204,255,0.15));
+            font-weight: 600;
+            background: rgba(255,255,255,0.08);
             border: 2px solid rgba(0,255,136,0.4);
-            color: white;
             transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
-            box-shadow: 0 10px 30px rgba(0,255,136,0.3);
         }
 
-        .btn-primary:hover {
-            transform: scale(1.08) translateY(-3px);
-            box-shadow: 0 20px 50px rgba(0,255,136,0.5);
+        .btn:hover {
             background: linear-gradient(90deg, #00ff88, #00ccff);
             color: #050a0e;
+            transform: scale(1.06);
+            box-shadow: 0 15px 40px rgba(0,255,136,0.4);
         }
 
-        /* ======================== SCROLL ANIMATIONS ======================== */
+        /* ======================== ANIMATIONS ======================== */
         .fade-in {
             opacity: 0;
-            transform: translateY(60px);
-            transition: all 1.2s cubic-bezier(0.23, 1, 0.32, 1);
+            transform: translateY(50px);
+            transition: all 1s cubic-bezier(0.23, 1, 0.32, 1);
         }
 
         .fade-in.visible {
@@ -290,53 +237,18 @@
             transform: translateY(0);
         }
 
-        /* ======================== SECTION TITLES ======================== */
         .section-title {
             font-family: 'Orbitron', sans-serif;
-            font-size: 3.2rem;
+            font-size: 2.8rem;
             background: linear-gradient(90deg, #00ff88, #7c3aed);
             -webkit-background-clip: text;
             color: transparent;
         }
-
-        /* ======================== TIMELINE ======================== */
-        .timeline-item {
-            position: relative;
-        }
-
-        .timeline-item::before {
-            content: '';
-            position: absolute;
-            left: 28px;
-            top: 0;
-            bottom: 0;
-            width: 4px;
-            background: linear-gradient(to bottom, #00ff88, #00ccff);
-            opacity: 0.3;
-        }
-
-        /* ======================== CAROUSEL ======================== */
-        .carousel-track {
-            transition: transform 0.6s cubic-bezier(0.32, 0.72, 0, 1);
-        }
-
-        /* ======================== MODALS ======================== */
-        .modal {
-            animation: modalPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-
-        @keyframes modalPop {
-            0% { transform: scale(0.8); opacity: 0; }
-            100% { transform: scale(1); opacity: 1; }
-        }
-
-        /* Extra utilities */
-        .text-glow { text-shadow: 0 0 20px currentColor; }
     </style>
 </head>
 <body>
 
-    <!-- BACKGROUND LAYERS -->
+    <!-- BACKGROUNDS -->
     <div class="bg-animated"></div>
     <div class="noise"></div>
     <div class="vignette"></div>
@@ -348,27 +260,25 @@
     </div>
 
     <!-- NAVBAR -->
-    <nav class="navbar flex items-center justify-between max-w-[1200px] w-full mx-auto px-8 text-sm font-medium backdrop-blur-3xl">
-        <div class="flex items-center gap-x-3">
-            <div class="w-9 h-9 rounded-2xl bg-gradient-to-br from-[#00ff88] to-[#7c3aed] flex items-center justify-center text-xl shadow-inner">✦</div>
-            <span class="font-orbitron tracking-[3px] text-2xl">ANDREY MIHAI</span>
-        </div>
-        
-        <div class="hidden md:flex items-center gap-x-9 text-base">
-            <a href="#home" onclick="smoothScrollTo('home')" class="hover:text-[#00ff88] transition-colors">INICIO</a>
-            <a href="#about" onclick="smoothScrollTo('about')" class="hover:text-[#00ff88] transition-colors">SOBRE MÍ</a>
-            <a href="#skills" onclick="smoothScrollTo('skills')" class="hover:text-[#00ff88] transition-colors">HABILIDADES</a>
-            <a href="#projects" onclick="smoothScrollTo('projects')" class="hover:text-[#00ff88] transition-colors">PROYECTOS</a>
-            <a href="#experience" onclick="smoothScrollTo('experience')" class="hover:text-[#00ff88] transition-colors">EXPERIENCIA</a>
-            <a href="#contact" onclick="smoothScrollTo('contact')" class="hover:text-[#00ff88] transition-colors">CONTACTO</a>
+    <nav class="navbar flex items-center justify-between max-w-[1100px] w-full mx-auto px-6">
+        <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded-2xl bg-gradient-to-br from-[#00ff88] to-[#7c3aed] flex items-center justify-center text-lg">✦</div>
+            <span class="font-bold tracking-wider text-2xl">ANDREY MIHAI</span>
         </div>
 
-        <div class="flex items-center gap-x-4">
-            <a href="https://github.com" target="_blank" class="glass px-5 py-2 text-sm rounded-3xl flex items-center gap-x-2 hover:scale-105">
+        <div class="hidden md:flex items-center gap-8 text-base font-medium">
+            <a href="#home" class="hover:text-[#00ff88] transition-colors">Inicio</a>
+            <a href="#about" class="hover:text-[#00ff88] transition-colors">Sobre mí</a>
+            <a href="#skills" class="hover:text-[#00ff88] transition-colors">Habilidades</a>
+            <a href="#projects" class="hover:text-[#00ff88] transition-colors">Proyectos</a>
+            <a href="#contact" class="hover:text-[#00ff88] transition-colors">Contacto</a>
+        </div>
+
+        <div class="flex items-center gap-3">
+            <a href="https://github.com" target="_blank" class="glass px-6 py-2 rounded-3xl flex items-center gap-2 text-sm">
                 <i class="fab fa-github"></i>
-                <span>GITHUB</span>
+                GitHub
             </a>
-            <!-- Mobile menu button -->
             <button onclick="toggleMobileMenu()" class="md:hidden glass w-11 h-11 rounded-3xl flex items-center justify-center text-2xl">
                 <i id="mobile-icon" class="fa-solid fa-bars"></i>
             </button>
@@ -376,98 +286,51 @@
     </nav>
 
     <!-- MOBILE MENU -->
-    <div id="mobile-menu" class="hidden fixed inset-0 bg-black/80 backdrop-blur-3xl z-[99999] pt-24 px-6">
-        <div class="crystal p-8 flex flex-col gap-y-6 text-2xl">
-            <a href="#home" onclick="toggleMobileMenu();smoothScrollTo('home')" class="py-4 border-b border-white/10">INICIO</a>
-            <a href="#about" onclick="toggleMobileMenu();smoothScrollTo('about')" class="py-4 border-b border-white/10">SOBRE MÍ</a>
-            <a href="#skills" onclick="toggleMobileMenu();smoothScrollTo('skills')" class="py-4 border-b border-white/10">HABILIDADES</a>
-            <a href="#projects" onclick="toggleMobileMenu();smoothScrollTo('projects')" class="py-4 border-b border-white/10">PROYECTOS</a>
-            <a href="#experience" onclick="toggleMobileMenu();smoothScrollTo('experience')" class="py-4 border-b border-white/10">EXPERIENCIA</a>
-            <a href="#contact" onclick="toggleMobileMenu();smoothScrollTo('contact')" class="py-4">CONTACTO</a>
+    <div id="mobile-menu" class="hidden fixed inset-0 bg-black/90 backdrop-blur-3xl z-[99999] pt-24 px-8">
+        <div class="flex flex-col gap-8 text-2xl">
+            <a href="#home" onclick="toggleMobileMenu()" class="py-4 border-b border-white/10">Inicio</a>
+            <a href="#about" onclick="toggleMobileMenu()" class="py-4 border-b border-white/10">Sobre mí</a>
+            <a href="#skills" onclick="toggleMobileMenu()" class="py-4 border-b border-white/10">Habilidades</a>
+            <a href="#projects" onclick="toggleMobileMenu()" class="py-4 border-b border-white/10">Proyectos</a>
+            <a href="#contact" onclick="toggleMobileMenu()" class="py-4">Contacto</a>
         </div>
     </div>
 
     <!-- HERO -->
-    <section id="home" class="min-h-screen flex flex-col items-center justify-center text-center px-6 relative">
-        <div class="max-w-5xl mx-auto">
-            <div class="inline-flex items-center gap-x-2 bg-white/5 text-[#00ff88] text-sm font-mono tracking-[2px] px-6 py-3 rounded-3xl mb-8 border border-white/10">
-                <span class="relative flex h-3 w-3">
-                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#00ff88] opacity-75"></span>
-                    <span class="relative inline-flex rounded-full h-3 w-3 bg-[#00ff88]"></span>
-                </span>
-                NEXT LEVEL EXPERIENCE
-            </div>
-
-            <h1 class="hero-title mb-6 leading-none">ANDREY MIHAI</h1>
-            <p class="hero-subtitle mb-10">Desarrollador • Addon Creator • Visual Engineer</p>
-
-            <div id="typewriter" class="text-4xl md:text-5xl font-light text-transparent bg-clip-text bg-gradient-to-r from-[#00ccff] to-[#7c3aed] h-14 mb-12 font-mono"></div>
+    <section id="home" class="min-h-screen flex flex-col items-center justify-center text-center px-6">
+        <div class="max-w-4xl mx-auto">
+            <h1 class="hero-title mb-4">ANDREY MIHAI</h1>
+            <p class="text-2xl text-gray-300 mb-10">Desarrollador de addons para Minecraft y frontend moderno</p>
+            
+            <div id="typewriter" class="text-4xl md:text-5xl font-light h-14 mb-12 text-transparent bg-clip-text bg-gradient-to-r from-[#00ccff] to-[#7c3aed]"></div>
 
             <div class="flex flex-wrap justify-center gap-4">
-                <a onclick="document.getElementById('projects').scrollIntoView({ behavior: 'smooth' })" 
-                   class="btn-primary flex items-center gap-x-3 shadow-2xl">
-                    <i class="fa-solid fa-rocket"></i>
-                    EXPLORAR PROYECTOS
-                </a>
-                <a onclick="document.getElementById('contact').scrollIntoView({ behavior: 'smooth' })" 
-                   class="glass px-10 py-6 text-lg rounded-3xl flex items-center gap-x-3 hover:scale-105">
-                    <i class="fa-solid fa-paper-plane"></i>
-                    CONECTAR
-                </a>
-            </div>
-
-            <!-- Scroll indicator -->
-            <div class="absolute bottom-12 left-1/2 flex flex-col items-center gap-y-2 text-xs tracking-widest">
-                <div class="text-[#00ff88]">SCROLL PARA DESCUBRIR</div>
-                <i class="fa-solid fa-chevron-down animate-bounce text-3xl text-[#00ff88]/70"></i>
-            </div>
-
-            <!-- Floating crystal orb -->
-            <div class="hidden xl:block absolute top-1/3 right-12 w-64 h-64 crystal rounded-[4rem] rotate-12 flex items-center justify-center text-8xl shadow-2xl">
-                💎
-                <div class="inner-glow"></div>
+                <a href="#projects" class="btn">Ver mis proyectos</a>
+                <a href="#contact" class="btn">Contacto</a>
             </div>
         </div>
     </section>
 
     <!-- ABOUT -->
     <section id="about" class="py-28 px-6">
-        <div class="max-w-6xl mx-auto">
-            <h2 class="section-title text-center mb-16">SOBRE MÍ</h2>
-            <div class="grid md:grid-cols-12 gap-12 items-center">
-                <div class="md:col-span-5">
-                    <div class="crystal p-10 text-lg leading-relaxed">
-                        <p class="mb-6">Hola, soy Andrey Mihai. Creador de experiencias visuales que rompen límites. Especializado en addons de Minecraft ultra inmersivos, interfaces frontend que parecen sacadas de iOS 18 y efectos de cristal que brillan como la pantalla de un iPhone 16 Pro.</p>
-                        <p>Mi misión: transformar cada píxel en arte digital. Más de 4 años creando addons que han sido descargados +1.2M veces y sitios web que dejan a los usuarios con la boca abierta.</p>
-                        
-                        <div class="mt-12 grid grid-cols-3 gap-6 text-center">
-                            <div>
-                                <div class="text-5xl font-orbitron text-[#00ff88]">42</div>
-                                <div class="text-sm font-mono text-white/60">ADDONS LANZADOS</div>
-                            </div>
-                            <div>
-                                <div class="text-5xl font-orbitron text-[#00ccff]">1.2M</div>
-                                <div class="text-sm font-mono text-white/60">DESCARGAS</div>
-                            </div>
-                            <div>
-                                <div class="text-5xl font-orbitron text-[#7c3aed]">∞</div>
-                                <div class="text-sm font-mono text-white/60">CREATIVIDAD</div>
-                            </div>
-                        </div>
+        <div class="max-w-5xl mx-auto">
+            <h2 class="section-title text-center mb-12">Sobre mí</h2>
+            <div class="crystal max-w-3xl mx-auto p-12 text-lg leading-relaxed">
+                <p class="mb-8">Hola, soy Andrey Mihai. Me dedico a crear addons para Minecraft y sitios web con interfaces modernas y limpias.</p>
+                <p>Durante los últimos años he desarrollado más de 30 addons que han sido descargados por miles de jugadores. También me encargo de proyectos frontend con un enfoque en diseño claro y efectos visuales pulidos.</p>
+                
+                <div class="mt-12 flex flex-wrap gap-8 justify-center text-center">
+                    <div>
+                        <div class="text-5xl font-bold text-[#00ff88]">30+</div>
+                        <div class="text-sm font-medium">Addons creados</div>
                     </div>
-                </div>
-                <div class="md:col-span-7">
-                    <div class="crystal p-12 text-xl">
-                        <h3 class="text-3xl mb-8 flex items-center gap-x-4"><span class="text-[#00ff88]">✦</span> Mi filosofía</h3>
-                        <p class="mb-8">"No solo escribo código. Creo mundos. Cada línea que escribo está pensada para que el usuario sienta que está dentro de un iPhone hecho realidad."</p>
-                        <div class="flex flex-wrap gap-4">
-                            <span class="px-6 py-3 bg-white/10 rounded-3xl text-sm">Minecraft PvP Systems</span>
-                            <span class="px-6 py-3 bg-white/10 rounded-3xl text-sm">Glassmorphism iOS-level</span>
-                            <span class="px-6 py-3 bg-white/10 rounded-3xl text-sm">Three.js + WebGL</span>
-                            <span class="px-6 py-3 bg-white/10 rounded-3xl text-sm">Tailwind + GSAP</span>
-                            <span class="px-6 py-3 bg-white/10 rounded-3xl text-sm">Particle Shaders</span>
-                            <span class="px-6 py-3 bg-white/10 rounded-3xl text-sm">UI/UX Futurista</span>
-                        </div>
+                    <div>
+                        <div class="text-5xl font-bold text-[#00ccff]">1M+</div>
+                        <div class="text-sm font-medium">Descargas totales</div>
+                    </div>
+                    <div>
+                        <div class="text-5xl font-bold text-[#7c3aed]">4</div>
+                        <div class="text-sm font-medium">Años de experiencia</div>
                     </div>
                 </div>
             </div>
@@ -477,60 +340,47 @@
     <!-- SKILLS -->
     <section id="skills" class="py-28 px-6 bg-black/30">
         <div class="max-w-6xl mx-auto">
-            <h2 class="section-title text-center mb-16">HABILIDADES ULTRA</h2>
-            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-                <!-- Skill 1 -->
-                <div class="crystal p-8 text-center hover:rotate-2 transition-transform">
-                    <i class="fa-brands fa-java text-7xl mb-6 text-[#00ff88]"></i>
-                    <h4 class="text-2xl font-semibold mb-3">Minecraft Addons</h4>
-                    <div class="h-2 bg-white/10 rounded-full overflow-hidden mb-2"><div class="h-full w-[95%] bg-gradient-to-r from-[#00ff88] to-[#00ccff]"></div></div>
-                    <p class="text-sm text-white/60">PvP Systems • Custom Mobs • 120+ addons</p>
+            <h2 class="section-title text-center mb-12">Habilidades</h2>
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                <div class="crystal p-8 text-center">
+                    <i class="fa-brands fa-java text-6xl mb-4 text-[#00ff88]"></i>
+                    <h4 class="font-semibold text-xl mb-2">Minecraft Addons</h4>
+                    <p class="text-sm text-gray-400">Java, Skript y sistemas PvP</p>
                 </div>
-                <!-- Skill 2 -->
-                <div class="crystal p-8 text-center hover:rotate-2 transition-transform">
-                    <i class="fa-solid fa-cube text-7xl mb-6 text-[#00ccff]"></i>
-                    <h4 class="text-2xl font-semibold mb-3">Three.js / WebGL</h4>
-                    <div class="h-2 bg-white/10 rounded-full overflow-hidden mb-2"><div class="h-full w-[88%] bg-gradient-to-r from-[#00ccff] to-[#7c3aed]"></div></div>
-                    <p class="text-sm text-white/60">Cristales 3D • Shaders en tiempo real</p>
+                <div class="crystal p-8 text-center">
+                    <i class="fa-solid fa-cube text-6xl mb-4 text-[#00ccff]"></i>
+                    <h4 class="font-semibold text-xl mb-2">Three.js / WebGL</h4>
+                    <p class="text-sm text-gray-400">Efectos 3D y partículas</p>
                 </div>
-                <!-- Skill 3 -->
-                <div class="crystal p-8 text-center hover:rotate-2 transition-transform">
-                    <i class="fa-solid fa-mobile-screen text-7xl mb-6 text-[#7c3aed]"></i>
-                    <h4 class="text-2xl font-semibold mb-3">iOS Crystal UI</h4>
-                    <div class="h-2 bg-white/10 rounded-full overflow-hidden mb-2"><div class="h-full w-[100%] bg-gradient-to-r from-[#7c3aed] to-[#00ff88]"></div></div>
-                    <p class="text-sm text-white/60">Glassmorphism perfecto • Dynamic Island</p>
+                <div class="crystal p-8 text-center">
+                    <i class="fa-solid fa-mobile-screen text-6xl mb-4 text-[#7c3aed]"></i>
+                    <h4 class="font-semibold text-xl mb-2">Frontend Moderno</h4>
+                    <p class="text-sm text-gray-400">HTML, CSS y Tailwind</p>
                 </div>
-                <!-- Skill 4 -->
-                <div class="crystal p-8 text-center hover:rotate-2 transition-transform">
-                    <i class="fa-brands fa-react text-7xl mb-6 text-[#00ff88]"></i>
-                    <h4 class="text-2xl font-semibold mb-3">React + Next.js</h4>
-                    <div class="h-2 bg-white/10 rounded-full overflow-hidden mb-2"><div class="h-full w-[92%] bg-gradient-to-r from-[#00ff88] to-[#00ccff]"></div></div>
-                    <p class="text-sm text-white/60">Apps ultra rápidas • Animaciones GSAP</p>
+                <div class="crystal p-8 text-center">
+                    <i class="fa-brands fa-react text-6xl mb-4 text-[#00ff88]"></i>
+                    <h4 class="font-semibold text-xl mb-2">React / Next.js</h4>
+                    <p class="text-sm text-gray-400">Aplicaciones rápidas</p>
                 </div>
-                <!-- Más skills para llenar líneas -->
-                <div class="crystal p-8 text-center hover:rotate-2 transition-transform">
-                    <i class="fa-solid fa-fire-flame-curved text-7xl mb-6 text-[#00ccff]"></i>
-                    <h4 class="text-2xl font-semibold mb-3">Tailwind + CSS Avanzado</h4>
-                    <div class="h-2 bg-white/10 rounded-full overflow-hidden mb-2"><div class="h-full w-[99%] bg-gradient-to-r from-[#00ccff] to-[#7c3aed]"></div></div>
-                    <p class="text-sm text-white/60">Glass effects • Custom cursors</p>
+                <div class="crystal p-8 text-center">
+                    <i class="fa-solid fa-fire-flame-curved text-6xl mb-4 text-[#00ccff]"></i>
+                    <h4 class="font-semibold text-xl mb-2">CSS Avanzado</h4>
+                    <p class="text-sm text-gray-400">Glassmorphism y animaciones</p>
                 </div>
-                <div class="crystal p-8 text-center hover:rotate-2 transition-transform">
-                    <i class="fa-solid fa-wand-magic-sparkles text-7xl mb-6 text-[#7c3aed]"></i>
-                    <h4 class="text-2xl font-semibold mb-3">Particle Systems</h4>
-                    <div class="h-2 bg-white/10 rounded-full overflow-hidden mb-2"><div class="h-full w-[85%] bg-gradient-to-r from-[#7c3aed] to-[#00ff88]"></div></div>
-                    <p class="text-sm text-white/60">Nebula + Crystal floating</p>
+                <div class="crystal p-8 text-center">
+                    <i class="fa-solid fa-wand-magic-sparkles text-6xl mb-4 text-[#7c3aed]"></i>
+                    <h4 class="font-semibold text-xl mb-2">Particle Systems</h4>
+                    <p class="text-sm text-gray-400">Efectos visuales en canvas</p>
                 </div>
-                <div class="crystal p-8 text-center hover:rotate-2 transition-transform">
-                    <i class="fa-solid fa-chart-simple text-7xl mb-6 text-[#00ff88]"></i>
-                    <h4 class="text-2xl font-semibold mb-3">Performance 120fps</h4>
-                    <div class="h-2 bg-white/10 rounded-full overflow-hidden mb-2"><div class="h-full w-[100%] bg-gradient-to-r from-[#00ff88] to-[#00ccff]"></div></div>
-                    <p class="text-sm text-white/60">Optimización extrema</p>
+                <div class="crystal p-8 text-center">
+                    <i class="fa-solid fa-chart-simple text-6xl mb-4 text-[#00ff88]"></i>
+                    <h4 class="font-semibold text-xl mb-2">Optimización</h4>
+                    <p class="text-sm text-gray-400">Rendimiento 120 fps</p>
                 </div>
-                <div class="crystal p-8 text-center hover:rotate-2 transition-transform">
-                    <i class="fa-solid fa-palette text-7xl mb-6 text-[#00ccff]"></i>
-                    <h4 class="text-2xl font-semibold mb-3">Branding Futurista</h4>
-                    <div class="h-2 bg-white/10 rounded-full overflow-hidden mb-2"><div class="h-full w-[90%] bg-gradient-to-r from-[#00ccff] to-[#7c3aed]"></div></div>
-                    <p class="text-sm text-white/60">Neón + Crystal aesthetic</p>
+                <div class="crystal p-8 text-center">
+                    <i class="fa-solid fa-palette text-6xl mb-4 text-[#00ccff]"></i>
+                    <h4 class="font-semibold text-xl mb-2">Diseño UI/UX</h4>
+                    <p class="text-sm text-gray-400">Interfaces limpias y claras</p>
                 </div>
             </div>
         </div>
@@ -538,165 +388,66 @@
 
     <!-- PROJECTS -->
     <section id="projects" class="py-28 px-6">
-        <div class="max-w-7xl mx-auto">
-            <h2 class="section-title text-center mb-16">PROYECTOS DESTACADOS</h2>
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-
-                <!-- Project 1 -->
-                <div onclick="showProjectModal(1)" class="crystal p-8 cursor-pointer group">
-                    <div class="h-56 bg-gradient-to-br from-[#00ff88]/20 to-[#7c3aed]/20 rounded-3xl flex items-center justify-center text-8xl mb-6 group-hover:scale-105 transition-transform">⚔️</div>
-                    <h3 class="text-2xl font-semibold mb-2">xA Addon v9.4</h3>
-                    <p class="text-white/70 mb-6">Sistema PvP avanzado con cristales iOS en el HUD, partículas reactivas y anti-cheat de última generación.</p>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="text-xs px-4 py-1 bg-[#00ff88]/10 text-[#00ff88] rounded-3xl">Minecraft</span>
-                        <span class="text-xs px-4 py-1 bg-[#00ccff]/10 text-[#00ccff] rounded-3xl">Java</span>
-                        <span class="text-xs px-4 py-1 bg-white/10 rounded-3xl">1.2M descargas</span>
-                    </div>
+        <div class="max-w-6xl mx-auto">
+            <h2 class="section-title text-center mb-12">Proyectos</h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="crystal p-8">
+                    <div class="h-52 bg-gradient-to-br from-[#00ff88]/10 to-transparent rounded-3xl flex items-center justify-center text-8xl mb-6">⚔️</div>
+                    <h3 class="text-2xl font-semibold mb-3">xA Addon</h3>
+                    <p class="text-gray-400 mb-6">Sistema PvP completo con HUD personalizado y mecánicas avanzadas.</p>
+                    <span class="text-xs px-5 py-2 bg-[#00ff88]/10 text-[#00ff88] rounded-3xl">Minecraft</span>
                 </div>
 
-                <!-- Project 2 -->
-                <div onclick="showProjectModal(2)" class="crystal p-8 cursor-pointer group">
-                    <div class="h-56 bg-gradient-to-br from-[#00ccff]/20 to-[#7c3aed]/20 rounded-3xl flex items-center justify-center text-8xl mb-6 group-hover:scale-105 transition-transform">🪐</div>
-                    <h3 class="text-2xl font-semibold mb-2">Kriptón Addon</h3>
-                    <p class="text-white/70 mb-6">Addon competitivo con economía basada en cristales, leaderboards en tiempo real y UI inspirada en iOS 18.</p>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="text-xs px-4 py-1 bg-[#7c3aed]/10 text-[#7c3aed] rounded-3xl">PvP</span>
-                        <span class="text-xs px-4 py-1 bg-[#00ff88]/10 text-[#00ff88] rounded-3xl">Crystal UI</span>
-                    </div>
+                <div class="crystal p-8">
+                    <div class="h-52 bg-gradient-to-br from-[#00ccff]/10 to-transparent rounded-3xl flex items-center justify-center text-8xl mb-6">🪐</div>
+                    <h3 class="text-2xl font-semibold mb-3">Kriptón Addon</h3>
+                    <p class="text-gray-400 mb-6">Addon competitivo con economía y leaderboards en tiempo real.</p>
+                    <span class="text-xs px-5 py-2 bg-[#00ccff]/10 text-[#00ccff] rounded-3xl">Minecraft</span>
                 </div>
 
-                <!-- Project 3 -->
-                <div onclick="showProjectModal(3)" class="crystal p-8 cursor-pointer group">
-                    <div class="h-56 bg-gradient-to-br from-[#7c3aed]/20 to-[#00ff88]/20 rounded-3xl flex items-center justify-center text-8xl mb-6 group-hover:scale-105 transition-transform">🌌</div>
-                    <h3 class="text-2xl font-semibold mb-2">Nebula Portfolio</h3>
-                    <p class="text-white/70 mb-6">Este mismo sitio web. 100% hecho a mano con efectos de cristal idénticos a los de iPhone y cursor custom premium.</p>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="text-xs px-4 py-1 bg-white/10 rounded-3xl">HTML + CSS</span>
-                        <span class="text-xs px-4 py-1 bg-white/10 rounded-3xl">Particle Canvas</span>
-                    </div>
+                <div class="crystal p-8">
+                    <div class="h-52 bg-gradient-to-br from-[#7c3aed]/10 to-transparent rounded-3xl flex items-center justify-center text-8xl mb-6">🌐</div>
+                    <h3 class="text-2xl font-semibold mb-3">Inferno HUD</h3>
+                    <p class="text-gray-400 mb-6">Interfaz de usuario para Minecraft con efectos visuales dinámicos.</p>
+                    <span class="text-xs px-5 py-2 bg-[#7c3aed]/10 text-[#7c3aed] rounded-3xl">Minecraft</span>
                 </div>
 
-                <!-- Project 4 -->
-                <div onclick="showProjectModal(4)" class="crystal p-8 cursor-pointer group">
-                    <div class="h-56 bg-gradient-to-br from-[#00ff88]/20 to-[#00ccff]/20 rounded-3xl flex items-center justify-center text-8xl mb-6 group-hover:scale-105 transition-transform">🔥</div>
-                    <h3 class="text-2xl font-semibold mb-2">Inferno HUD</h3>
-                    <p class="text-white/70 mb-6">HUD minimalista con cristal dinámico que reacciona al daño del jugador. Más de 400k descargas.</p>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="text-xs px-4 py-1 bg-[#00ccff]/10 text-[#00ccff] rounded-3xl">iOS Crystal</span>
-                    </div>
+                <div class="crystal p-8">
+                    <div class="h-52 bg-gradient-to-br from-[#00ff88]/10 to-transparent rounded-3xl flex items-center justify-center text-8xl mb-6">📡</div>
+                    <h3 class="text-2xl font-semibold mb-3">Quantum Network</h3>
+                    <p class="text-gray-400 mb-6">Dashboard web para servidores de Minecraft con datos en tiempo real.</p>
+                    <span class="text-xs px-5 py-2 bg-white/10 rounded-3xl">Web</span>
                 </div>
 
-                <!-- Más proyectos para aumentar líneas -->
-                <div onclick="showProjectModal(5)" class="crystal p-8 cursor-pointer group">
-                    <div class="h-56 bg-gradient-to-br from-[#00ccff]/20 to-[#7c3aed]/20 rounded-3xl flex items-center justify-center text-8xl mb-6 group-hover:scale-105 transition-transform">🧬</div>
-                    <h3 class="text-2xl font-semibold mb-2">BioForge Addon</h3>
-                    <p class="text-white/70 mb-6">Sistema de mutaciones genéticas con partículas cristalinas y efectos de refracción en 3D.</p>
+                <div class="crystal p-8">
+                    <div class="h-52 bg-gradient-to-br from-[#00ccff]/10 to-transparent rounded-3xl flex items-center justify-center text-8xl mb-6">🔧</div>
+                    <h3 class="text-2xl font-semibold mb-3">BioForge</h3>
+                    <p class="text-gray-400 mb-6">Sistema de mecánicas personalizadas para Minecraft.</p>
+                    <span class="text-xs px-5 py-2 bg-[#00ccff]/10 text-[#00ccff] rounded-3xl">Minecraft</span>
                 </div>
 
-                <div onclick="showProjectModal(6)" class="crystal p-8 cursor-pointer group">
-                    <div class="h-56 bg-gradient-to-br from-[#7c3aed]/20 to-[#00ff88]/20 rounded-3xl flex items-center justify-center text-8xl mb-6 group-hover:scale-105 transition-transform">📡</div>
-                    <h3 class="text-2xl font-semibold mb-2">Quantum Network</h3>
-                    <p class="text-white/70 mb-6">Red de servidores con dashboard de cristal transparente y animaciones en tiempo real.</p>
-                </div>
-
-                <div onclick="showProjectModal(7)" class="crystal p-8 cursor-pointer group">
-                    <div class="h-56 bg-gradient-to-br from-[#00ff88]/20 to-[#00ccff]/20 rounded-3xl flex items-center justify-center text-8xl mb-6 group-hover:scale-105 transition-transform">🎨</div>
-                    <h3 class="text-2xl font-semibold mb-2">Neon Canvas</h3>
-                    <p class="text-white/70 mb-6">Editor de partículas en vivo con exportación a Minecraft addons.</p>
-                </div>
-
-                <div onclick="showProjectModal(8)" class="crystal p-8 cursor-pointer group">
-                    <div class="h-56 bg-gradient-to-br from-[#7c3aed]/20 to-[#00ff88]/20 rounded-3xl flex items-center justify-center text-8xl mb-6 group-hover:scale-105 transition-transform">🚀</div>
-                    <h3 class="text-2xl font-semibold mb-2">Launch Protocol</h3>
-                    <p class="text-white/70 mb-6">Landing pages con efecto de lanzamiento iOS y cursor que se transforma en cohete.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- EXPERIENCE / TIMELINE -->
-    <section id="experience" class="py-28 px-6 bg-black/30">
-        <div class="max-w-5xl mx-auto">
-            <h2 class="section-title text-center mb-16">TRAYECTORIA</h2>
-            <div class="space-y-16 relative before:absolute before:left-8 before:top-0 before:bottom-0 before:w-px before:bg-gradient-to-b before:from-[#00ff88] before:to-transparent">
-                <div class="timeline-item pl-20">
-                    <div class="crystal p-8">
-                        <div class="flex justify-between mb-4"><span class="font-mono text-[#00ff88]">2025 — ACTUAL</span><span class="text-sm text-white/50">Freelance + Partner Mineverse</span></div>
-                        <h4 class="text-2xl">Lead Visual Engineer @ NextLevel Studio</h4>
-                        <p class="text-white/70">Creación de más de 12 addons premium con efectos de cristal iOS idénticos y custom cursors.</p>
-                    </div>
-                </div>
-                <div class="timeline-item pl-20">
-                    <div class="crystal p-8">
-                        <div class="flex justify-between mb-4"><span class="font-mono text-[#00ccff]">2024</span><span class="text-sm text-white/50">Minecraft Marketplace</span></div>
-                        <h4 class="text-2xl">Top Creator 2024</h4>
-                        <p class="text-white/70">Reconocido por innovación en glassmorphism y sistemas de partículas.</p>
-                    </div>
-                </div>
-                <div class="timeline-item pl-20">
-                    <div class="crystal p-8">
-                        <div class="flex justify-between mb-4"><span class="font-mono text-[#7c3aed]">2023</span><span class="text-sm text-white/50">DevCon Minecraft</span></div>
-                        <h4 class="text-2xl">Conferencia: “Cristales que brillan como iPhone”</h4>
-                        <p class="text-white/70">Charla sobre técnicas avanzadas de backdrop-filter y canvas shaders.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- TESTIMONIALS -->
-    <section class="py-28 px-6">
-        <div class="max-w-4xl mx-auto">
-            <h2 class="section-title text-center mb-16">LO QUE DICEN DE MÍ</h2>
-            <div id="carousel" class="overflow-hidden">
-                <div id="carousel-track" class="flex transition-transform">
-                    <div class="crystal p-12 min-w-full md:min-w-1/2 lg:min-w-1/3">
-                        <p class="text-xl italic mb-8">"Los efectos de cristal de Andrey son literalmente indistinguibles de los de un iPhone 16. Pura magia."</p>
-                        <div class="flex items-center gap-x-4">
-                            <div class="w-12 h-12 bg-gradient-to-br from-[#00ff88] to-[#00ccff] rounded-2xl"></div>
-                            <div>
-                                <div class="font-semibold">Mango — Owner Mineverse</div>
-                                <div class="text-sm text-white/50">Minecraft Network</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="crystal p-12 min-w-full md:min-w-1/2 lg:min-w-1/3">
-                        <p class="text-xl italic mb-8">"Su cursor custom + cristal UI me dejó sin palabras. El mejor portfolio que he visto."</p>
-                        <div class="flex items-center gap-x-4">
-                            <div class="w-12 h-12 bg-gradient-to-br from-[#7c3aed] to-[#00ff88] rounded-2xl"></div>
-                            <div>
-                                <div class="font-semibold">LunaPixel</div>
-                                <div class="text-sm text-white/50">Content Creator</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="crystal p-12 min-w-full md:min-w-1/2 lg:min-w-1/3">
-                        <p class="text-xl italic mb-8">"Implementó mi addon en 48h con efectos de cristal que parecen sacados de iOS 18."</p>
-                        <div class="flex items-center gap-x-4">
-                            <div class="w-12 h-12 bg-gradient-to-br from-[#00ccff] to-[#7c3aed] rounded-2xl"></div>
-                            <div>
-                                <div class="font-semibold">Zer0</div>
-                                <div class="text-sm text-white/50">Addon Developer</div>
-                            </div>
-                        </div>
-                    </div>
+                <div class="crystal p-8">
+                    <div class="h-52 bg-gradient-to-br from-[#7c3aed]/10 to-transparent rounded-3xl flex items-center justify-center text-8xl mb-6">🎨</div>
+                    <h3 class="text-2xl font-semibold mb-3">Neon Canvas</h3>
+                    <p class="text-gray-400 mb-6">Editor visual de partículas para exportar a addons.</p>
+                    <span class="text-xs px-5 py-2 bg-white/10 rounded-3xl">Web</span>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- CONTACT -->
-    <section id="contact" class="py-28 px-6 bg-black/40">
-        <div class="max-w-4xl mx-auto crystal p-12 md:p-16">
-            <h2 class="section-title text-center mb-12">¿HABLAMOS?</h2>
+    <section id="contact" class="py-28 px-6">
+        <div class="max-w-3xl mx-auto crystal p-12">
+            <h2 class="section-title text-center mb-12">Contacto</h2>
             <form id="contact-form" class="space-y-8">
-                <div class="grid md:grid-cols-2 gap-8">
-                    <input type="text" placeholder="Tu nombre" class="glass px-8 py-6 text-lg rounded-3xl focus:outline-none focus:ring-2 focus:ring-[#00ff88]" required>
-                    <input type="email" placeholder="tu@email.com" class="glass px-8 py-6 text-lg rounded-3xl focus:outline-none focus:ring-2 focus:ring-[#00ff88]" required>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <input type="text" placeholder="Nombre" class="glass px-7 py-5 rounded-3xl text-lg focus:outline-none" required>
+                    <input type="email" placeholder="Email" class="glass px-7 py-5 rounded-3xl text-lg focus:outline-none" required>
                 </div>
-                <textarea placeholder="Cuéntame tu idea..." rows="6" class="glass px-8 py-6 text-lg rounded-3xl w-full focus:outline-none focus:ring-2 focus:ring-[#00ff88]"></textarea>
-                <button type="button" onclick="submitForm()" class="btn-primary w-full py-8 text-2xl flex items-center justify-center gap-x-4">
-                    <span>ENVIAR MENSAJE AL ESPACIO</span>
+                <textarea placeholder="Mensaje" rows="6" class="glass px-7 py-5 rounded-3xl w-full text-lg focus:outline-none" required></textarea>
+                <button onclick="submitForm(event)" class="btn w-full text-xl flex items-center justify-center gap-3">
+                    Enviar mensaje
                     <i class="fa-solid fa-paper-plane"></i>
                 </button>
             </form>
@@ -704,58 +455,56 @@
     </section>
 
     <!-- FOOTER -->
-    <footer class="py-16 px-6 border-t border-white/10">
-        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-y-8">
-            <div class="flex items-center gap-x-3 text-2xl font-orbitron">ANDREY MIHAI <span class="text-[#00ff88]">✦</span></div>
-            <div class="flex gap-x-8 text-sm">
-                <a href="#" class="hover:text-[#00ff88]">X / Twitter</a>
-                <a href="#" class="hover:text-[#00ff88]">Discord</a>
-                <a href="#" class="hover:text-[#00ff88]">YouTube</a>
-                <a href="#" class="hover:text-[#00ff88]">Instagram</a>
-            </div>
-            <div class="text-xs font-mono text-white/40">© 2026 — Hecho con cristal iOS + ❤️ en la galaxia</div>
-        </div>
+    <footer class="py-12 px-6 border-t border-white/10 text-center text-sm text-gray-400">
+        © 2026 Andrey Mihai — Todos los derechos reservados
     </footer>
 
-    <!-- PROJECT MODALS -->
-    <div onclick="if(event.target.id === 'modal-backdrop')hideModals()" id="modal-backdrop" class="hidden fixed inset-0 bg-black/80 backdrop-blur-xl z-[100000] flex items-center justify-center">
-        <div id="modal-content" class="modal crystal max-w-2xl w-full mx-4 p-10 text-left hidden">
-            <!-- JS will populate this -->
-        </div>
-    </div>
-
     <script>
-        // ==========================================
-        // TAILWIND CONFIG
-        // ==========================================
+        // Tailwind
         function initTailwind() {
-            return {
-                config(userConfig = {}) {
-                    return {
-                        content: [],
-                        theme: {
-                            extend: {},
-                        },
-                        plugins: [],
-                        ...userConfig,
-                    }
-                },
-                theme(config) {
-                    return config.theme
-                },
-            }
+            return { config(userConfig = {}) { return { content: [], theme: { extend: {} }, plugins: [], ...userConfig } }, theme(config) { return config.theme } }
         }
-        const config = initTailwind().config({ content: ['./**/*.html'] })
-        document.documentElement.setAttribute('data-tailwind-config', JSON.stringify(config))
+        document.documentElement.setAttribute('data-tailwind-config', JSON.stringify(initTailwind().config()))
 
-        // ==========================================
-        // PARTICLE SYSTEM - CRYSTAL NEBULA
-        // ==========================================
+        // Particle system
         function createParticleSystem() {
             const canvas = document.getElementById('particle-canvas')
             const ctx = canvas.getContext('2d')
-            
-            let width, height
+            let width, height, particles = []
+
+            class Particle {
+                constructor() {
+                    this.x = Math.random() * width
+                    this.y = Math.random() * height
+                    this.size = Math.random() * 3.5 + 0.8
+                    this.speedX = (Math.random() - 0.5) * 0.8
+                    this.speedY = (Math.random() - 0.5) * 0.8
+                    this.hue = [165, 195, 270][Math.floor(Math.random() * 3)]
+                    this.life = 280 + Math.random() * 180
+                }
+                update() {
+                    this.x += this.speedX
+                    this.y += this.speedY
+                    this.life--
+                    const dx = width / 2 - this.x
+                    const dy = height / 2 - this.y
+                    this.speedX += dx * 0.0001
+                    this.speedY += dy * 0.0001
+                    if (this.x < 0 || this.x > width) this.speedX *= -0.9
+                    if (this.y < 0 || this.y > height) this.speedY *= -0.9
+                }
+                draw() {
+                    const alpha = this.life / 400
+                    ctx.save()
+                    ctx.globalAlpha = alpha
+                    ctx.fillStyle = `hsl(${this.hue}, 95%, 88%)`
+                    ctx.shadowBlur = 12
+                    ctx.shadowColor = `hsl(${this.hue}, 95%, 88%)`
+                    ctx.fillRect(this.x, this.y, this.size, this.size)
+                    ctx.restore()
+                }
+            }
+
             function resize() {
                 width = window.innerWidth
                 height = window.innerHeight
@@ -765,364 +514,140 @@
             window.addEventListener('resize', resize)
             resize()
 
-            let particles = []
-            class Particle {
-                constructor() {
-                    this.x = Math.random() * width
-                    this.y = Math.random() * height
-                    this.size = Math.random() * 4 + 1
-                    this.speedX = (Math.random() - 0.5) * 0.6
-                    this.speedY = (Math.random() - 0.5) * 0.6
-                    this.hue = [160, 195, 270][Math.floor(Math.random()*3)] // neon green, cyan, purple
-                    this.life = 300 + Math.random() * 200
-                }
-                update() {
-                    this.x += this.speedX
-                    this.y += this.speedY
-                    this.life--
-                    // gentle attraction to center for nebula effect
-                    const dx = width/2 - this.x
-                    const dy = height/2 - this.y
-                    this.speedX += dx * 0.00008
-                    this.speedY += dy * 0.00008
-                    // bounce on edges
-                    if (this.x < 0 || this.x > width) this.speedX *= -1
-                    if (this.y < 0 || this.y > height) this.speedY *= -1
-                }
-                draw() {
-                    const alpha = this.life / 400
-                    ctx.save()
-                    ctx.globalAlpha = alpha
-                    ctx.fillStyle = `hsl(${this.hue}, 100%, 85%)`
-                    ctx.shadowBlur = 20
-                    ctx.shadowColor = `hsl(${this.hue}, 100%, 85%)`
-                    ctx.fillRect(this.x, this.y, this.size, this.size)
-                    // tiny crystal sparkle
-                    if (Math.random() > 0.9) {
-                        ctx.fillStyle = '#fff'
-                        ctx.fillRect(this.x + this.size/2, this.y + this.size/2, 1, 1)
-                    }
-                    ctx.restore()
-                }
+            function spawn(count) {
+                for (let i = 0; i < count; i++) particles.push(new Particle())
             }
 
-            function spawnParticles(count) {
-                for (let i = 0; i < count; i++) {
-                    particles.push(new Particle())
-                }
-            }
-
-            function animateParticles() {
+            function animate() {
                 ctx.clearRect(0, 0, width, height)
                 particles.forEach((p, i) => {
                     p.update()
                     p.draw()
                     if (p.life <= 0) particles.splice(i, 1)
                 })
-                // keep particle count
-                if (particles.length < 180) spawnParticles(8)
-                requestAnimationFrame(animateParticles)
+                if (particles.length < 160) spawn(7)
+                requestAnimationFrame(animate)
             }
 
-            spawnParticles(220)
-            animateParticles()
-            
-            console.log('%c✅ Crystal Nebula particles loaded (iOS-level glow)', 'color:#00ff88; font-family:monospace')
+            spawn(220)
+            animate()
         }
 
-        // ==========================================
-        // CUSTOM CURSOR ENHANCED
-        // ==========================================
+        // Custom cursor
         function initCustomCursor() {
             const cursor = document.getElementById('custom-cursor')
             const core = document.getElementById('cursor-core')
+            let mouseX = window.innerWidth / 2, mouseY = window.innerHeight / 2
+            let posX = mouseX, posY = mouseY
 
-            let mouseX = window.innerWidth / 2
-            let mouseY = window.innerHeight / 2
-            let posX = mouseX
-            let posY = mouseY
-
-            document.addEventListener('mousemove', (e) => {
+            document.addEventListener('mousemove', e => {
                 mouseX = e.clientX
                 mouseY = e.clientY
             })
 
-            function animateCursor() {
-                // smooth follow
-                posX = posX + (mouseX - posX) * 0.18
-                posY = posY + (mouseY - posY) * 0.18
-                
+            function loop() {
+                posX = posX + (mouseX - posX) * 0.2
+                posY = posY + (mouseY - posY) * 0.2
                 cursor.style.left = `${posX}px`
                 cursor.style.top = `${posY}px`
-                
-                requestAnimationFrame(animateCursor)
+                requestAnimationFrame(loop)
             }
 
-            // Interactive hover states
-            const interactive = document.querySelectorAll('a, button, .glass, .crystal')
-            interactive.forEach(el => {
+            // Hover effects
+            document.querySelectorAll('a, button, .glass, .crystal').forEach(el => {
                 el.addEventListener('mouseenter', () => {
                     core.style.width = '22px'
                     core.style.height = '22px'
-                    cursor.style.filter = 'hue-rotate(280deg)'
                 })
                 el.addEventListener('mouseleave', () => {
                     core.style.width = '14px'
                     core.style.height = '14px'
-                    cursor.style.filter = 'hue-rotate(0deg)'
                 })
             })
 
-            animateCursor()
-            console.log('%c✅ Custom crystal cursor initialized (iPhone premium feel)', 'color:#00ccff; font-family:monospace')
+            loop()
         }
 
-        // ==========================================
-        // TYPEWRITER - MULTI PHRASE
-        // ==========================================
+        // Typewriter
         function typewriter() {
-            const element = document.getElementById('typewriter')
-            const phrases = [
-                "NEXT LEVEL DEVELOPER",
-                "CRYSTAL UI MASTER",
-                "MINECRAFT VISIONARY",
-                "IOS-LEVEL DESIGNER"
-            ]
-            let index = 0
-            let charIndex = 0
-            let isDeleting = false
+            const el = document.getElementById('typewriter')
+            const texts = ["Desarrollador", "Creador de addons", "Frontend moderno", "Minecraft enthusiast"]
+            let i = 0, char = 0, deleting = false
 
             function type() {
-                const currentPhrase = phrases[index]
-                
-                if (isDeleting) {
-                    element.textContent = currentPhrase.substring(0, charIndex - 1)
-                    charIndex--
+                const current = texts[i]
+
+                if (deleting) {
+                    el.textContent = current.substring(0, char - 1)
+                    char--
                 } else {
-                    element.textContent = currentPhrase.substring(0, charIndex + 1)
-                    charIndex++
+                    el.textContent = current.substring(0, char + 1)
+                    char++
                 }
 
-                if (!isDeleting && charIndex === currentPhrase.length) {
-                    isDeleting = true
-                    setTimeout(type, 1800)
-                    return
-                }
+                if (!deleting && char === current.length) { deleting = true; setTimeout(type, 1400); return }
+                if (deleting && char === 0) { deleting = false; i = (i + 1) % texts.length; setTimeout(type, 300); return }
 
-                if (isDeleting && charIndex === 0) {
-                    isDeleting = false
-                    index = (index + 1) % phrases.length
-                    setTimeout(type, 400)
-                    return
-                }
-
-                const speed = isDeleting ? 35 : 65
-                setTimeout(type, speed)
+                setTimeout(type, deleting ? 35 : 70)
             }
             type()
         }
 
-        // ==========================================
-        // SCROLL FADE + NAVBAR
-        // ==========================================
-        function initScrollAnimations() {
-            const observer = new IntersectionObserver((entries) => {
+        // Scroll animations
+        function initScroll() {
+            const observer = new IntersectionObserver(entries => {
                 entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible')
-                    }
+                    if (entry.isIntersecting) entry.target.classList.add('visible')
                 })
-            }, { threshold: 0.15 })
+            }, { threshold: 0.2 })
 
-            document.querySelectorAll('.fade-in').forEach(el => {
-                // Add class to elements that should animate
-                if (!el.classList.contains('fade-in')) el.classList.add('fade-in')
-                observer.observe(el)
-            })
+            document.querySelectorAll('section').forEach(s => observer.observe(s))
 
-            // Navbar scroll effect
-            const navbar = document.querySelector('.navbar')
+            // Navbar scroll
+            const nav = document.querySelector('.navbar')
             window.addEventListener('scroll', () => {
-                if (window.scrollY > 80) {
-                    navbar.classList.add('scrolled')
-                } else {
-                    navbar.classList.remove('scrolled')
-                }
+                nav.classList.toggle('scrolled', window.scrollY > 60)
             })
         }
 
-        // ==========================================
-        // PROJECT MODALS
-        // ==========================================
-        const projectData = {
-            1: {
-                title: "xA Addon v9.4 — Crystal PvP",
-                desc: "Sistema completo de PvP con HUD de cristal transparente, partículas reactivas al daño y barra de vida estilo iOS Dynamic Island. Más de 1.2 millones de descargas.",
-                tech: "Java • Skript • Custom Shaders • iOS Crystal",
-                emoji: "⚔️"
-            },
-            2: {
-                title: "Kriptón Addon — Competitive Crystal",
-                desc: "Economía basada en cristales flotantes, leaderboards con animaciones WebGL y UI que imita perfectamente la estética de iPhone.",
-                tech: "Minecraft • Three.js integration • Glassmorphism",
-                emoji: "🪐"
-            },
-            3: {
-                title: "Nebula Portfolio (este sitio)",
-                desc: "Portfolio ultra premium con partículas de cristal en canvas, cursor custom orb y glass effects idénticos a los del nuevo iOS.",
-                tech: "Vanilla HTML • Canvas • Tailwind • 100% self-contained",
-                emoji: "🌌"
-            },
-            4: {
-                title: "Inferno HUD — Crystal Damage",
-                desc: "HUD que cambia de color según el daño recibido con refracción de cristal en tiempo real.",
-                tech: "Addon • Dynamic Glass",
-                emoji: "🔥"
-            },
-            5: {
-                title: "BioForge Addon",
-                desc: "Mutaciones con cristales 3D y efectos de refracción que reaccionan al entorno del jugador.",
-                tech: "Three.js + Minecraft",
-                emoji: "🧬"
-            },
-            6: {
-                title: "Quantum Network Dashboard",
-                desc: "Panel de control con cristales interactivos y datos en tiempo real.",
-                tech: "React + Crystal UI",
-                emoji: "📡"
-            },
-            7: {
-                title: "Neon Canvas Editor",
-                desc: "Herramienta visual para crear partículas y exportarlas directamente a addons de Minecraft.",
-                tech: "Canvas + WebGL",
-                emoji: "🎨"
-            },
-            8: {
-                title: "Launch Protocol",
-                desc: "Landing pages con efecto de lanzamiento y cursor que se transforma en cohete con cristal glow.",
-                tech: "GSAP + Custom Cursor",
-                emoji: "🚀"
-            }
-        }
-
-        function showProjectModal(id) {
-            const data = projectData[id]
-            const modalContent = document.getElementById('modal-content')
-            modalContent.innerHTML = `
-                <div class="flex justify-end mb-4">
-                    <button onclick="hideModals()" class="text-4xl text-white/60 hover:text-white">×</button>
-                </div>
-                <div class="text-8xl mb-6">${data.emoji}</div>
-                <h2 class="text-4xl font-orbitron mb-6">${data.title}</h2>
-                <p class="text-lg leading-relaxed mb-8">${data.desc}</p>
-                <div class="bg-white/10 p-6 rounded-3xl mb-8">
-                    <span class="font-mono text-sm text-[#00ff88]">TECNOLOGÍAS USADAS</span>
-                    <p class="mt-3">${data.tech}</p>
-                </div>
-                <a href="#" onclick="hideModals()" class="btn-primary flex items-center justify-center w-full py-7 text-xl">VER DEMO EN VIVO →</a>
-            `
-            modalContent.classList.remove('hidden')
-            document.getElementById('modal-backdrop').classList.remove('hidden')
-            document.getElementById('modal-backdrop').classList.add('flex')
-        }
-
-        function hideModals() {
-            const backdrop = document.getElementById('modal-backdrop')
-            backdrop.classList.add('hidden')
-            backdrop.classList.remove('flex')
-            document.getElementById('modal-content').classList.add('hidden')
-        }
-
-        // ==========================================
-        // CONTACT FORM FAKE SUBMIT
-        // ==========================================
-        function submitForm() {
-            const btn = document.querySelector('#contact-form button')
-            const originalText = btn.innerHTML
-            btn.innerHTML = `<i class="fa-solid fa-spinner animate-spin"></i> ENVIANDO A LA NEBULOSA...`
-            
-            setTimeout(() => {
-                btn.style.transitionDuration = '400ms'
-                btn.innerHTML = `✅ ¡ENVIADO! Te responderé en menos de 4 minutos ✨`
-                btn.classList.add('!bg-[#00ff88]', '!text-black')
-                
-                setTimeout(() => {
-                    btn.innerHTML = originalText
-                    btn.classList.remove('!bg-[#00ff88]', '!text-black')
-                    document.getElementById('contact-form').reset()
-                }, 4200)
-            }, 1850)
-        }
-
-        // ==========================================
-        // MOBILE MENU
-        // ==========================================
+        // Mobile menu
         function toggleMobileMenu() {
             const menu = document.getElementById('mobile-menu')
             const icon = document.getElementById('mobile-icon')
             if (menu.classList.contains('hidden')) {
-                menu.style.display = 'block'
+                menu.classList.remove('hidden')
                 icon.classList.replace('fa-bars', 'fa-xmark')
             } else {
-                menu.style.display = 'none'
+                menu.classList.add('hidden')
                 icon.classList.replace('fa-xmark', 'fa-bars')
             }
         }
 
-        // ==========================================
-        // SMOOTH SCROLL
-        // ==========================================
-        function smoothScrollTo(section) {
-            const el = document.getElementById(section)
-            if (el) el.scrollIntoView({ behavior: 'smooth' })
+        // Fake form submit
+        function submitForm(e) {
+            e.preventDefault()
+            const btn = e.target
+            const original = btn.innerHTML
+            btn.innerHTML = 'Enviando...'
+            setTimeout(() => {
+                btn.innerHTML = '✅ Mensaje enviado'
+                setTimeout(() => {
+                    btn.innerHTML = original
+                    document.getElementById('contact-form').reset()
+                }, 2800)
+            }, 1600)
         }
 
-        // ==========================================
-        // CAROUSEL AUTO
-        // ==========================================
-        function initCarousel() {
-            const track = document.getElementById('carousel-track')
-            let position = 0
-            const slideWidth = window.innerWidth < 768 ? 100 : 50 // responsive
-            
-            setInterval(() => {
-                position += slideWidth
-                if (position >= track.scrollWidth / 1.5) position = 0
-                track.style.transform = `translateX(-${position}%)`
-            }, 4200)
-        }
-
-        // ==========================================
-        // MAIN LAUNCH
-        // ==========================================
-        function launchNextLevel() {
-            console.log('%c🚀 ANDREY MIHAI — NEXT LEVEL 100000% LOADED', 'font-family:Orbitron; font-size:22px; color:#00ff88; letter-spacing:8px')
-            console.log('%cCrystal effects = iPhone 16 Pro Max quality | Custom cursor = premium orb', 'color:#00ccff')
-
+        // Launch everything
+        function launch() {
             createParticleSystem()
             initCustomCursor()
             typewriter()
-            initScrollAnimations()
-            initCarousel()
-
-            // Extra console flair
-            console.log('%c📍 1000+ líneas de código puro. Efectos de cristal mejorados al 100000%. Cursor custom listo.', 'background:#050a0e;color:#7c3aed;padding:1px 4px;border-radius:2px')
-            
-            // Keyboard easter egg
-            let konami = ''
-            document.addEventListener('keydown', (e) => {
-                konami += e.key
-                if (konami.length > 10) konami = konami.slice(1)
-                if (konami.includes('ArrowUpArrowUpArrowDownArrowDownArrowLeftArrowRightArrowLeftArrowRightba')) {
-                    document.body.style.setProperty('--glass-bg', 'rgba(255,255,255,0.25)')
-                    console.log('%c💎 ULTRA CRYSTAL MODE ACTIVATED', 'color:#ff00ff;font-size:18px')
-                    konami = ''
-                }
-            })
+            initScroll()
+            console.log('%c✅ Portfolio de Andrey Mihai cargado correctamente', 'color:#00ff88; font-family:monospace')
         }
 
-        // BOOT THE EXPERIENCE
-        window.onload = launchNextLevel
+        window.onload = launch
     </script>
 </body>
 </html>
