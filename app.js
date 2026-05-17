@@ -13,3 +13,33 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 200 * (index + 1));
     });
 });
+// Consumir API de Java (Estadísticas)
+async function fetchJavaStats() {
+    try {
+        const response = await fetch('http://localhost:8080/api/stats');
+        const data = await response.json();
+        console.log("Datos desde Java:", data);
+        // Aquí puedes inyectar los datos dinámicamente en el DOM si lo deseas
+    } catch (error) {
+        console.log("Servidor Java offline (esperado en local sin ejecutar el .jar)");
+    }
+}
+
+// Enviar formulario a Python
+async function sendContact(name, email, message) {
+    try {
+        const response = await fetch('http://localhost:8000/api/contact', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name, email, message })
+        });
+        return await response.json();
+    } catch (error) {
+        console.error("Error al conectar con la API de Python:", error);
+    }
+}
+
+// Inicializar cargas
+document.addEventListener("DOMContentLoaded", () => {
+    fetchJavaStats();
+});
